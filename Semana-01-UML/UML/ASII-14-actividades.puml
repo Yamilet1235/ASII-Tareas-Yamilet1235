@@ -1,0 +1,108 @@
+@startuml
+
+title Catálogo de Medicamentos\nDiagrama de Actividades
+
+start
+
+:Usuario inicia sesión;
+
+if (¿Credenciales válidas?) then (Sí)
+    :Sistema identifica al usuario;
+    :Sistema identifica el hospital activo\nmediante tenant_id;
+else (No)
+    :Mostrar mensaje de credenciales incorrectas;
+    stop
+endif
+
+:Usuario ingresa al módulo\nCatálogo de Medicamentos;
+
+if (¿Qué operación desea realizar?) then (Dar de alta)
+
+    :Administrador selecciona\n"Nuevo medicamento";
+
+    :Completar nombre comercial,\nnombre genérico, categoría,\npresentación y concentración;
+
+    if (¿Datos obligatorios completos?) then (Sí)
+
+        :Validar que el usuario tenga\npermiso para registrar;
+
+        if (¿Usuario autorizado?) then (Sí)
+
+            :Buscar medicamento con el mismo\nnombre dentro del hospital activo;
+
+            if (¿Medicamento duplicado?) then (Sí)
+                :Mostrar mensaje\n"El medicamento ya existe";
+            else (No)
+                :Asignar tenant_id;
+                :Establecer active = true;
+                :Guardar medicamento;
+                :Mostrar mensaje de registro exitoso;
+            endif
+
+        else (No)
+            :Mostrar mensaje\n"No tiene permiso para registrar";
+        endif
+
+    else (No)
+        :Mostrar errores de validación;
+    endif
+
+elseif (Buscar)
+
+    :Usuario ingresa nombre comercial\no nombre genérico;
+
+    :Sistema busca medicamentos\nfiltrando por tenant_id;
+
+    if (¿Existen resultados?) then (Sí)
+        :Mostrar listado paginado;
+        :Usuario selecciona un medicamento;
+        :Mostrar detalle, presentación,\nconcentración y estado;
+    else (No)
+        :Mostrar mensaje\n"No se encontraron medicamentos";
+    endif
+
+else (Controlar vigencia)
+
+    :Administrador selecciona\nun medicamento;
+
+    :Sistema verifica que el medicamento\npertenezca al hospital activo;
+
+    if (¿Medicamento encontrado?) then (Sí)
+
+        if (¿Usuario tiene permiso?) then (Sí)
+
+            if (¿Medicamento está activo?) then (Sí)
+                :Solicitar confirmación\npara desactivar;
+
+                if (¿Confirma la operación?) then (Sí)
+                    :Cambiar active = false;
+                    :Guardar cambio;
+                    :Mostrar mensaje\n"Medicamento desactivado";
+                else (No)
+                    :Cancelar operación;
+                endif
+
+            else (No)
+                :Solicitar confirmación\npara activar;
+
+                if (¿Confirma la operación?) then (Sí)
+                    :Cambiar active = true;
+                    :Guardar cambio;
+                    :Mostrar mensaje\n"Medicamento activado";
+                else (No)
+                    :Cancelar operación;
+                endif
+            endif
+
+        else (No)
+            :Mostrar mensaje\n"No tiene permiso para modificar";
+        endif
+
+    else (No)
+        :Mostrar mensaje\n"Medicamento no encontrado";
+    endif
+endif
+
+stop
+
+@enduml
