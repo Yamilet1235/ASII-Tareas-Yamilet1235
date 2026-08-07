@@ -1,0 +1,136 @@
+@startuml
+
+title Catálogo de Medicamentos\nDiagrama de Secuencia
+
+actor Usuario
+boundary "Interfaz Vue" as Vista
+control "API Laravel" as API
+control "Middleware JWT y Tenant" as Seguridad
+control "MedicationController" as Controlador
+database "Base de datos" as BD
+
+== Autenticación ==
+
+Usuario -> Vista : Ingresa correo, contraseña\ny X-Tenant-ID
+Vista -> API : POST /auth/login
+API -> Seguridad : Validar credenciales y tenant
+
+alt Credenciales incorrectas
+    Seguridad --> API : Acceso rechazado
+    API --> Vista : 401 Credenciales incorrectas
+    Vista --> Usuario : Mostrar mensaje de error
+else Credenciales válidas
+    Seguridad --> API : Usuario y tenant válidos
+    API --> Vista : Token JWT
+    Vista --> Usuario : Mostrar página principal
+end
+
+== Alta de medicamento ==
+
+Usuario -> Vista : Selecciona "Nuevo medicamento"
+Vista --> Usuario : Mostrar formulario
+Usuario -> Vista : Completa los datos
+Vista -> API : POST /medications\nDatos + JWT + X-Tenant-ID
+
+API -> Seguridad : Validar token, tenant y permiso
+
+alt Usuario sin permiso
+    Seguridad --> API : Acceso denegado
+    API --> Vista : 403 Sin permiso
+    Vista --> Usuario : Mostrar acceso denegado
+else Usuario autorizado
+    Seguridad --> API : Acceso permitido
+    API -> Controlador : store(datos)
+
+    Controlador -> Controlador : Validar datos obligatorios
+
+    alt Datos inválidos
+        Controlador --> API : Errores de validación
+        API --> Vista : 422 Datos inválidos
+        Vista --> Usuario : Mostrar errores
+    else Datos válidos
+        Controlador -> BD : Buscar por tenant_id y name
+
+        alt Medicamento duplicado
+            BD --> Controlador : Registro existente
+            Controlador --> API : Medicamento duplicado
+            API --> Vista : 409 Conflicto
+            Vista --> Usuario : Mostrar mensaje de duplicado
+        else Medicamento no registrado
+            BD --> Controlador : Sin coincidencias
+            Controlador -> BD : INSERT medicamento\nactive = true
+            BD --> Controlador : Medicamento creado
+            Controlador --> API : Registro creado
+            API --> Vista : 201 Medicamento registrado
+            Vista --> Usuario : Mostrar confirmación
+        end
+    end
+end
+
+== Búsqueda de medicamento ==
+
+Usuario -> Vista : Escribe nombre comercial\no nombre genérico
+Vista -> API : GET /medications?search=criterio\nJWT + X-Tenant-ID
+
+API -> Seguridad : Validar token y tenant
+Seguridad --> API : Acceso permitido
+API -> Controlador : index(search)
+
+Controlador -> BD : SELECT medicamentos\nWHERE tenant_id = hospital activo\nAND name o generic_name coincide
+
+alt Sin resultados
+    BD --> Controlador : Lista vacía
+    Controlador --> API : Resultado vacío
+    API --> Vista : 200 Lista vacía
+    Vista --> Usuario : Mostrar "Sin resultados"
+else Con resultados
+    BD --> Controlador : Medicamentos encontrados
+    Controlador --> API : Resultado paginado
+    API --> Vista : 200 Lista de medicamentos
+    Vista --> Usuario : Mostrar resultados
+end
+
+== Control de vigencia ==
+
+Usuario -> Vista : Selecciona activar o desactivar
+Vista --> Usuario : Solicitar confirmación
+Usuario -> Vista : Confirma la operación
+
+Vista -> API : PATCH /medications/{id}/status\nJWT + X-Tenant-ID
+API -> Seguridad : Validar token, tenant y permiso
+
+alt Usuario sin permiso
+    Seguridad --> API : Acceso denegado
+    API --> Vista : 403 Sin permiso
+    Vista --> Usuario : Mostrar acceso denegado
+else Usuario autorizado
+    Seguridad --> API : Acceso permitido
+    API -> Controlador : changeStatus(id)
+
+    Controlador -> BD : Buscar medicamento\npor id y tenant_id
+
+    alt Medicamento no encontrado
+        BD --> Controlador : Sin coincidencias
+        Controlador --> API : Recurso no encontrado
+        API --> Vista : 404 No encontrado
+        Vista --> Usuario : Mostrar mensaje
+    else Medicamento encontrado
+        BD --> Controlador : Datos del medicamento
+
+        alt Medicamento activo
+            Controlador -> BD : UPDATE active = false
+            BD --> Controlador : Estado actualizado
+            Controlador --> API : Medicamento desactivado
+            API --> Vista : 200 Operación exitosa
+            Vista --> Usuario : Mostrar confirmación
+        else Medicamento inactivo
+            Controlador -> BD : UPDATE active = true
+            BD --> Controlador : Estado actualizado
+            Controlador --> API : Medicamento activado
+            API --> Vista : 200 Operación exitosa
+            Vista --> Usuario : Mostrar confirmación
+        end
+    end
+end
+
+@enduml
