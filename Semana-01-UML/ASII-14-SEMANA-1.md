@@ -201,7 +201,7 @@ El usuario visualiza solamente medicamentos pertenecientes a su hospital.
 
 ---
 
-### CU-MED-03 — Dar de alta un medicamento
+### CU-MED-03 — Registrar un medicamento 
 
 **Actor principal:** Administrador.
 
@@ -236,7 +236,7 @@ El medicamento queda registrado y disponible dentro del catálogo del hospital.
 
 ---
 
-### CU-MED-06 — Controlar vigencia del medicamento
+### CU-MED-06 — Activar o desactivar medicamentos
 
 **Actor principal:** Administrador.
 
@@ -384,3 +384,15 @@ Sin embargo, todavía no están implementados el controlador, las rutas API, las
 Además del análisis de actores, alcance y casos de uso, se modeló el proceso de alta, búsqueda y control de vigencia mediante diagramas de casos de uso, actividades y secuencia.
 
 Los tres diagramas mantienen relación entre sus actores, operaciones, validaciones, excepciones y resultados, y servirán como base para el desarrollo de las siguientes semanas.
+
+## 11. Bibliografía
+
+1. Object Management Group (OMG). *Unified Modeling Language (UML) Version 2.5.1.*
+
+2. PlantUML. https://plantuml.com/
+
+3. Documentación oficial de Laravel.
+https://laravel.com/docs
+
+4. Documentación oficial de PHP.
+https://www.php.net/docs.php
