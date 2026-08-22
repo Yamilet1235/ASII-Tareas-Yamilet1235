@@ -8,34 +8,34 @@
 
 ## Herramientas utilizadas
 
-- ChatGPT.
-- OpenCode.
+- ChatGPT
+- OpenCode
 
 ## Propósito del uso
 
-Las herramientas se utilizaron como apoyo para interpretar la consigna, proponer una estructura de cuatro capas, generar de forma asistida una primera versión del código y la documentación, y revisar la coherencia técnica del resultado. También apoyaron la preparación de pruebas, diagramas PlantUML y pasos reproducibles de ejecución.
+ChatGPT y OpenCode se utilizaron como herramientas de apoyo para analizar e interpretar la consigna, comprender mejor el código y las responsabilidades de sus capas, recibir una propuesta de estructura por capas y orientar la organización de la documentación y los diagramas. Su uso fue complementario al trabajo y criterio de la estudiante.
 
-## Prompt relevante resumido
+## Orientación solicitada
 
-Se solicitó construir, exclusivamente dentro de la carpeta de la semana 3, un micro-monolito educativo en PHP 8.2 vanilla para el catálogo de medicamentos. Debía incluir alta, búsqueda, activación y desactivación; arquitectura Presentation/Application/Domain/Persistence; SQLite con PDO y sentencias preparadas; configuración externa; manejo de errores; pruebas sin framework; documentación académica y diagramas editables. Se indicó no usar datos reales, no modificar otras semanas y no realizar commits ni push.
+Se solicitó orientación para organizar un micro-monolito educativo en PHP 8.2 vanilla que incluyera alta y búsqueda de medicamentos, control de vigencia, separación en las capas Presentation, Application, Domain y Persistence, acceso a SQLite mediante PDO, pruebas automatizadas y documentación académica.
 
-## Partes aceptadas o modificadas
+## Aportes revisados y adaptados
 
-Se aceptó la estructura general por capas, la entidad `Medication`, el enum `MedicationStatus`, los tres casos de uso, el puerto de repositorio, la implementación PDO, la interfaz web, el ejecutor de pruebas, la documentación y los diagramas propuestos con asistencia.
+Las propuestas y sugerencias fueron revisadas y adaptadas al módulo asignado. Los principales aspectos considerados fueron:
 
-La propuesta se ajustó para:
+- La separación de responsabilidades entre las cuatro capas.
+- La ubicación del puerto `MedicationRepository` fuera de Persistence.
+- Las validaciones obligatorias y el control de unicidad de nombres.
+- El uso de los estados `ACTIVE` e `INACTIVE`.
+- El empleo exclusivo de datos ficticios.
+- La exclusión de la configuración local y la base SQLite del control de versiones.
 
-- Mantener el puerto `MedicationRepository` fuera de Persistence.
-- Reforzar la unicidad tanto en Application como en SQLite.
-- Mostrar estados técnicos en español sin alterar los valores `ACTIVE`/`INACTIVE`.
-- Usar únicamente datos y nombres ficticios.
-- Evitar Composer porque no es indispensable.
-- Mantener configuración y base local fuera del control de versiones.
+También se revisaron orientaciones para estructurar el informe, la guía de defensa y los diagramas editables.
 
-## Validación humana realizada
+## Validación realizada por la estudiante
 
-La estudiante revisó la organización de carpetas, los nombres del módulo, las reglas del dominio, los textos de la interfaz y la documentación. Además, debe verificar en su equipo la sintaxis PHP, ejecutar el inicializador SQLite, correr `php tests/run.php`, recorrer manualmente la interfaz y confirmar que las evidencias coinciden con lo presentado en el informe.
+María Yamilet ejecutó personalmente `php tests/run.php` y confirmó el resultado de 6 pruebas aprobadas y 0 fallidas. Además, abrió la aplicación en localhost, registró medicamentos ficticios, comprobó la búsqueda automática, verificó el rechazo de nombres duplicados, probó la activación y desactivación de medicamentos, y revisó los mensajes y la interfaz web.
 
 ## Responsabilidad y comprensión
 
-La generación asistida no reemplaza la responsabilidad académica. La estudiante revisó el resultado y debe comprenderlo antes de entregarlo o defenderlo. Debe ser capaz de explicar cada capa, PDO, las sentencias preparadas, la regla de vigencia, la restricción de duplicados, los dobles de prueba y los comandos de ejecución. Cualquier cambio posterior debe volver a validarse.
+La estudiante es responsable del contenido final, de comprender las decisiones implementadas y de defender el proyecto. El uso de ChatGPT y OpenCode como apoyo no sustituye su revisión, aprendizaje ni responsabilidad académica.
