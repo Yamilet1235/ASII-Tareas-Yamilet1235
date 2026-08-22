@@ -1,0 +1,66 @@
+@startuml
+title Micro-HIS Catálogo de Medicamentos - Clases principales
+
+skinparam shadowing false
+
+package Domain {
+  class Medication {
+    - id: ?int
+    - name: string
+    - genericName: string
+    - presentation: string
+    - concentration: string
+    - status: MedicationStatus
+    + register(...): Medication
+    + isCurrent(): bool
+    + isSelectable(): bool
+    + changeStatus(status): void
+  }
+
+  enum MedicationStatus {
+    ACTIVE
+    INACTIVE
+    + fromInput(status): MedicationStatus
+    + label(): string
+  }
+
+  interface MedicationRepository {
+    + add(medication): Medication
+    + findById(id): ?Medication
+    + findByName(name): ?Medication
+    + search(query): Medication[]
+    + changeStatus(id, status): Medication
+  }
+}
+
+package Application {
+  class RegisterMedication {
+    + execute(...): Medication
+  }
+  class SearchMedications {
+    + execute(query): Medication[]
+  }
+  class ToggleMedicationStatus {
+    + execute(id): Medication
+  }
+}
+
+package Persistence {
+  class PdoMedicationRepository {
+    - pdo: PDO
+  }
+  class DatabaseConnection {
+    + create(config): PDO
+  }
+}
+
+Medication *-- MedicationStatus
+RegisterMedication --> Medication
+RegisterMedication --> MedicationRepository
+SearchMedications --> MedicationRepository
+ToggleMedicationStatus --> MedicationRepository
+PdoMedicationRepository ..|> MedicationRepository
+PdoMedicationRepository --> Medication
+PdoMedicationRepository --> "PDO"
+DatabaseConnection --> "PDO"
+@enduml

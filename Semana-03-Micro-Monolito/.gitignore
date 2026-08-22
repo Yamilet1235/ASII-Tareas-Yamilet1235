@@ -1,0 +1,10 @@
+/config/config.php
+/database/*.sqlite
+/database/*.db
+*.tmp
+*.temp
+*.log
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/

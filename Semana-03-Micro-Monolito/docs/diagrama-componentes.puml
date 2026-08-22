@@ -1,0 +1,33 @@
+@startuml
+title Micro-HIS Catálogo de Medicamentos - Componentes
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+actor Usuario
+
+package "Micro-monolito PHP" {
+  component "Presentation\nControlador + vista" as Presentation
+  component "Application\nCasos de uso" as Application
+  component "Domain\nEntidad + reglas + puerto" as Domain
+  component "Persistence\nRepositorio PDO" as Persistence
+  component "Composición\npublic/index.php" as Bootstrap
+}
+
+database "SQLite\nmedications.sqlite" as SQLite
+
+Usuario --> Presentation : HTTP
+Bootstrap ..> Presentation : construye
+Bootstrap ..> Application : construye
+Bootstrap ..> Persistence : construye
+Presentation --> Application : ejecuta casos de uso
+Application --> Domain : usa entidad y puerto
+Persistence ..|> Domain : implementa puerto
+Persistence --> SQLite : PDO + sentencias preparadas
+
+note bottom of Domain
+  No depende de la web
+  ni de SQLite
+end note
+@enduml
