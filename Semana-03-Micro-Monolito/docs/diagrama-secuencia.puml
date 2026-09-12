@@ -1,0 +1,38 @@
+@startuml
+title Alta de un medicamento
+
+actor Usuario
+participant "Vista web" as View
+participant "MedicationController" as Controller
+participant "RegisterMedication" as UseCase
+participant "Medication" as Entity
+participant "MedicationRepository\n(puerto)" as Port
+participant "PdoMedicationRepository" as Repository
+database SQLite
+
+Usuario -> View : Completa y envía formulario
+View -> Controller : POST action=register
+Controller -> UseCase : execute(datos)
+UseCase -> Entity : register(datos)
+Entity -> Entity : validar obligatorios y estado
+Entity --> UseCase : medicamento válido
+UseCase -> Port : findByName(nombre)
+Port -> Repository : implementación
+Repository -> SQLite : SELECT preparado
+SQLite --> Repository : sin coincidencias
+Repository --> UseCase : null
+UseCase -> Port : add(medicamento)
+Port -> Repository : implementación
+Repository -> SQLite : INSERT preparado
+SQLite --> Repository : id generado
+Repository --> UseCase : medicamento guardado
+UseCase --> Controller : resultado
+Controller --> View : redirección + mensaje de éxito
+View --> Usuario : catálogo actualizado
+
+alt nombre duplicado
+  Repository --> UseCase : medicamento existente
+  UseCase --> Controller : DuplicateMedicationException
+  Controller --> View : mensaje comprensible
+end
+@enduml
