@@ -10,8 +10,8 @@
 **Usuario de GitHub:** Yamilet1235  
 **Tecnología:** PHP 8.2, SQLite y PDO  
 **Tipo de solución:** Micro-monolito educativo  
-**Fecha:** ____________________  
-**Docente:** ____________________
+**Fecha:** 12 de septiembre de 2026
+**Docente:** Ing. Richard David Ortiz Sasvin
 
 ## Índice manual
 
@@ -153,24 +153,61 @@ Casos cubiertos:
 5. Transformación de una excepción producida por un doble de persistencia.
 6. Integración real de PDO y SQLite para alta, búsquedas, duplicado acentuado y cambio de estado.
 
-### Evidencias que debo capturar
+### Evidencias de cumplimiento
 
-1. Terminal con `php --version`, demostrando PHP 8.2 o superior.
-2. Terminal con `php scripts/init_database.php` y su salida correcta.
-3. Terminal completa con las seis pruebas aprobadas de `php tests/run.php`.
-4. Pantalla principal con los datos ficticios iniciales.
-5. Formulario antes de registrar un medicamento ficticio nuevo.
-6. Mensaje de alta exitosa y medicamento visible en el listado.
-7. Resultado de una búsqueda por nombre genérico.
-8. Registro desactivado con la indicación “No vigente ni seleccionable”.
-9. Error al intentar registrar el mismo nombre cambiando mayúsculas y minúsculas.
-10. Código de `Medication`, `MedicationRepository` y `PdoMedicationRepository` para evidenciar la separación.
-11. Esquema SQLite mostrando la clave normalizada, `UNIQUE` y `CHECK`.
-12. Diagramas PlantUML renderizados; conservar también los `.puml` editables.
+La siguiente vista representa la arquitectura del Micro-HIS Catálogo de Medicamentos y muestra las capas Presentation, Application, Domain y Persistence, junto con sus dependencias.
 
-Las capturas deben evitar rutas personales si el informe se comparte públicamente y no deben incorporar datos reales.
+![Vista arquitectónica UML del Micro-HIS](imagenes/diagrama-componentes.png)
 
-## 10. Limitaciones
+
+#### Verificación técnica ejecutada
+
+La verificación final se realizó localmente sobre PHP 8.2.12.
+
+**Versión de PHP:**
+
+```text
+PHP 8.2.12 (cli)
+```
+
+**Inicialización de la base de datos:**
+
+```text
+Base de datos inicializada correctamente.
+Medicamentos disponibles: 5
+```
+
+**Pruebas automáticas:**
+
+```text
+[APROBADA] Camino feliz: registra un medicamento válido
+[APROBADA] Dominio: rechaza campos obligatorios vacíos
+[APROBADA] Aplicación: rechaza duplicados con mayúsculas y acentos
+[APROBADA] Vigencia: un medicamento inactivo no es vigente ni seleccionable
+[APROBADA] Aplicación: transforma un error de persistencia
+[APROBADA] Persistencia PDO: integra alta, búsqueda, unicidad y estado
+
+Resultado: 6 aprobadas, 0 fallidas.
+```
+
+#### Evidencia verificable en el repositorio
+
+- Alta de medicamentos: `src/Application/UseCase/RegisterMedication.php`.
+- Búsqueda: `src/Application/UseCase/SearchMedications.php`.
+- Activación y desactivación: `src/Application/UseCase/ToggleMedicationStatus.php`.
+- Reglas del dominio: `src/Domain/Medication.php`.
+- Puerto de persistencia: `src/Domain/Repository/MedicationRepository.php`.
+- Persistencia PDO y sentencias preparadas: `src/Persistence/PdoMedicationRepository.php`.
+- Conexión PDO: `src/Persistence/DatabaseConnection.php`.
+- Presentación y control HTTP: `src/Presentation/MedicationController.php`.
+- Pruebas automáticas: `tests/run.php`.
+- Esquema SQLite: `database/schema.sql`.
+- Vista arquitectónica UML: `docs/imagenes/diagrama-componentes.png`.
+- Fuente editable del diagrama: `docs/diagrama-componentes.puml`.
+
+La evidencia anterior utiliza únicamente datos ficticios y no contiene información clínica real.
+
+### 10. Limitaciones
 
 - Es un módulo educativo de un solo usuario y no incluye autenticación ni permisos.
 - No incluye edición ni eliminación, porque están fuera del alcance solicitado.

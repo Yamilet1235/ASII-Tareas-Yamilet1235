@@ -22,6 +22,7 @@ Bootstrap ..> Presentation : construye
 Bootstrap ..> Application : construye
 Bootstrap ..> Persistence : construye
 Presentation --> Application : ejecuta casos de uso
+Presentation --> Domain : usa entidad y excepciones
 Application --> Domain : usa entidad y puerto
 Persistence ..|> Domain : implementa puerto
 Persistence --> SQLite : PDO + sentencias preparadas
