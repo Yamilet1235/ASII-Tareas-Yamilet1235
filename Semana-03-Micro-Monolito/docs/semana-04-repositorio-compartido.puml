@@ -1,0 +1,78 @@
+@startuml
+title Semana 4 - Integración con Repositorio de Datos Compartido\nCatálogo de Medicamentos
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+actor Usuario
+
+package "Módulo Catálogo de Medicamentos" {
+
+    package "Presentation" {
+        component "MedicationController" as Controller
+        component "catalog.php\nVista" as View
+    }
+
+    package "Application" {
+        component "RegisterMedication" as Register
+        component "SearchMedications" as Search
+        component "ToggleMedicationStatus" as Toggle
+    }
+
+    package "Domain" {
+        component "Medication" as Medication
+        interface "MedicationRepository" as Repository
+    }
+
+    package "Infrastructure / Persistence" {
+        component "PdoMedicationRepository" as PDORepo
+        component "InMemoryMedicationRepository" as MemoryRepo
+        component "SharedMedicationRepository\nAdaptador futuro" as SharedRepo
+    }
+}
+
+cloud "Sistema Hospitalario Integrado" as HIS
+
+database "Repositorio de datos\ncompartido" as SharedDatabase
+
+Usuario --> Controller
+Controller --> Register
+Controller --> Search
+Controller --> Toggle
+Controller --> View
+
+Register --> Repository
+Search --> Repository
+Toggle --> Repository
+
+Register --> Medication
+Toggle --> Medication
+
+PDORepo ..|> Repository
+MemoryRepo ..|> Repository
+SharedRepo ..|> Repository
+
+SharedRepo --> HIS : integración
+HIS --> SharedDatabase : acceso a datos
+
+note right of Repository
+Contrato estable del dominio.
+
+Los casos de uso no necesitan
+conocer dónde se almacenan
+los medicamentos.
+end note
+
+note right of SharedRepo
+Este adaptador podría utilizar
+API, servicio interno o conexión
+autorizada al repositorio compartido.
+end note
+
+note bottom of SharedDatabase
+El repositorio compartido puede
+ser utilizado por otros módulos
+del Sistema Hospitalario Integrado.
+end note
+
+@enduml

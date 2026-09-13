@@ -1,0 +1,70 @@
+@startuml
+title Semana 4 - MVC + Repository\nCatálogo de Medicamentos
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+actor Usuario
+
+package "Presentation / MVC" {
+    component "public/index.php\nEntrada HTTP" as Index
+    component "MedicationController\nController" as Controller
+    component "catalog.php\nView" as View
+}
+
+package "Application" {
+    component "RegisterMedication" as Register
+    component "SearchMedications" as Search
+    component "ToggleMedicationStatus" as Toggle
+}
+
+package "Domain" {
+    component "Medication\nEntidad" as Medication
+    component "MedicationStatus\nRegla de estado" as Status
+    interface "MedicationRepository\nRepository" as Repository
+}
+
+package "Persistence" {
+    component "PdoMedicationRepository\nAdaptador PDO" as PDORepo
+    component "InMemoryMedicationRepository\nAdaptador InMemory" as MemoryRepo
+    component "DatabaseConnection\nPDO" as DBConnection
+}
+
+database "SQLite\nmedications.sqlite" as SQLite
+
+Usuario --> Index : solicitud HTTP
+Index --> Controller : datos de entrada
+Controller --> Register : registrar
+Controller --> Search : buscar
+Controller --> Toggle : cambiar estado
+
+Register --> Repository
+Search --> Repository
+Toggle --> Repository
+
+Register --> Medication
+Toggle --> Medication
+Medication --> Status
+
+PDORepo ..|> Repository
+MemoryRepo ..|> Repository
+
+PDORepo --> DBConnection
+DBConnection --> SQLite
+
+Controller --> View : datos para mostrar
+View --> Usuario : respuesta HTML
+
+note right of Controller
+No contiene SQL.
+No contiene reglas de negocio.
+Coordina los casos de uso.
+end note
+
+note bottom of Repository
+Los casos de uso dependen
+de esta abstracción y no
+de PDO ni de InMemory.
+end note
+
+@enduml
