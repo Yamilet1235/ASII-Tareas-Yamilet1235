@@ -1,0 +1,79 @@
+@startuml
+title Semana 5 - Arquitectura Cliente-Servidor y API REST\nCatálogo de Medicamentos
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+actor "Cliente\nWeb / Otro módulo" as Cliente
+
+package "Presentation" {
+    component "API REST\n/api/v1/medications" as API
+    component "MedicationApiController" as ApiController
+}
+
+package "Application" {
+    component "RegisterMedication" as Register
+    component "SearchMedications" as Search
+    component "GetMedication" as GetMedication
+    component "ToggleMedicationStatus" as Toggle
+}
+
+package "Domain" {
+    component "Medication" as Medication
+    component "MedicationStatus" as Status
+    interface "MedicationRepository" as Repository
+}
+
+package "Persistence" {
+    component "PdoMedicationRepository" as PDORepo
+    component "InMemoryMedicationRepository" as MemoryRepo
+    component "DatabaseConnection" as DBConnection
+}
+
+database "SQLite\nmedications.sqlite" as SQLite
+
+Cliente --> API : HTTP + JSON
+
+API --> ApiController
+
+ApiController --> Register : POST /medications
+ApiController --> Search : GET /medications
+ApiController --> GetMedication : GET /medications/{id}
+ApiController --> Toggle : PATCH /medications/{id}/status
+
+Register --> Repository
+Search --> Repository
+GetMedication --> Repository
+Toggle --> Repository
+
+Register --> Medication
+Toggle --> Medication
+Medication --> Status
+
+PDORepo ..|> Repository
+MemoryRepo ..|> Repository
+
+PDORepo --> DBConnection
+DBConnection --> SQLite
+
+note right of API
+Contrato REST versionado:
+/api/v1
+
+La API recibe y devuelve JSON.
+end note
+
+note right of ApiController
+No contiene SQL.
+No contiene reglas de negocio.
+Delega en los casos de uso.
+end note
+
+note bottom of Repository
+Los casos de uso dependen
+del contrato Repository,
+no de una tecnología
+de persistencia específica.
+end note
+
+@enduml
