@@ -1,0 +1,63 @@
+@startuml
+title Semana 5 - Frontera lógica y posible evolución a microservicio\nCatálogo de Medicamentos
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+package "Sistema Hospitalario Integrado" {
+
+    component "Módulo Prescripciones" as Prescripciones
+    component "Módulo Farmacia" as Farmacia
+    component "Módulo Atención Médica" as Atencion
+
+    package "Frontera lógica\nCatálogo de Medicamentos" {
+        component "API REST\n/api/v1/medications" as API
+        component "Application\nCasos de uso" as Application
+        component "Domain\nMedication" as Domain
+        interface "MedicationRepository" as Repository
+        component "Persistence" as Persistence
+    }
+}
+
+database "Datos del Catálogo" as DB
+
+cloud "Posible despliegue futuro\ncomo microservicio" as FutureService
+
+Prescripciones --> API : consulta medicamentos
+Farmacia --> API : consulta catálogo
+Atencion --> API : consulta vigencia
+
+API --> Application
+Application --> Domain
+Application --> Repository
+Persistence ..|> Repository
+Persistence --> DB
+
+API ..> FutureService : evolución futura
+
+note right of API
+La API define una frontera lógica
+sin obligar a separar físicamente
+el módulo en esta etapa.
+end note
+
+note right of DB
+Los datos del catálogo pertenecen
+al módulo Catálogo de Medicamentos.
+
+Otros módulos no deberían
+modificarlos directamente.
+end note
+
+note bottom of FutureService
+Una separación física solo se justificaría
+si existen necesidades medibles:
+
+- Escalamiento independiente
+- Despliegue independiente
+- Alto volumen de uso
+- Múltiples consumidores
+- Equipo responsable independiente
+end note
+
+@enduml
