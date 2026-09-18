@@ -1,0 +1,127 @@
+@startuml
+title Semana 8 - User flow por rol\nCatalogo de Medicamentos
+
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor White
+  BorderColor Black
+  DiamondBackgroundColor #E6E6E6
+  DiamondBorderColor Black
+  StartColor Black
+  EndColor Black
+}
+skinparam note {
+  BackgroundColor #F3F3F3
+  BorderColor #777777
+}
+
+start
+
+partition "Administrador, Medico y Enfermera" {
+  :Inicio;
+  :Abrir Catalogo de Medicamentos;
+  :Mostrar "Cargando medicamentos...";
+
+  if (¿Catalogo cargado?) then (No)
+    :Mostrar error recuperable;
+    :Conservar contexto y permitir reintentar;
+  else (Si)
+    if (¿Existen medicamentos?) then (No)
+      :Mostrar "No hay medicamentos registrados";
+      note right
+        Solo Administrador ve
+        "Registrar primer medicamento".
+      end note
+    else (Si)
+      :Mostrar catalogo y vigencia textual;
+    endif
+  endif
+
+  :Ingresar busqueda por nombre
+  comercial o generico;
+  :Mostrar "Buscando medicamentos...";
+
+  if (¿Hay coincidencias?) then (No)
+    :Mostrar "No se encontraron medicamentos";
+    :Limpiar busqueda o volver al listado;
+  else (Si)
+    :Mostrar resultados;
+    :Consultar presentacion,
+    concentracion y vigencia;
+  endif
+}
+
+if (¿Rol Administrador?) then (Si)
+  partition "Administrador - Alta" {
+    if (¿Desea registrar?) then (Si)
+      :Seleccionar "Registrar medicamento";
+      :Completar nombre, nombre generico,
+      presentacion, concentracion y estado;
+      :Recortar espacios externos;
+      :Validar campos y estado;
+
+      if (¿Datos validos?) then (No)
+        :Mostrar errores junto a los campos;
+        :Conservar datos validos;
+        :Enfocar el primer error;
+      else (Si)
+        :Comprobar unicidad del nombre;
+        if (¿Nombre duplicado?) then (Si)
+          :Mostrar "Ya existe un medicamento
+          con ese nombre";
+          :Conservar datos y enfocar Nombre;
+        else (No)
+          :Registrar medicamento;
+          if (¿Operacion completada?) then (No)
+            :Mostrar error recuperable;
+            :Permitir reintentar sin perder datos;
+          else (Si)
+            :Mostrar exito;
+            :Medicamento visible en el catalogo;
+          endif
+        endif
+      endif
+    else (No)
+      :Continuar en el catalogo;
+    endif
+  }
+
+  partition "Administrador - Vigencia" {
+    if (¿Desea activar o desactivar?) then (Si)
+      :Seleccionar medicamento y accion;
+      :Mostrar confirmacion y efecto;
+      if (¿Confirma?) then (No)
+        :Cancelar sin cambios;
+      else (Si)
+        :Solicitar cambio de vigencia;
+        if (¿Operacion completada?) then (No)
+          :Conservar estado anterior;
+          :Mostrar error y permitir reintentar;
+        else (Si)
+          :Mostrar ACTIVE/INACTIVE actualizado;
+          :Mostrar mensaje de exito;
+        endif
+      endif
+    else (No)
+      :Mantener vigencia actual;
+    endif
+  }
+else (Medico o Enfermera)
+  partition "Medico y Enfermera - Consulta" {
+    :No mostrar registro ni
+    controles de vigencia;
+    :Continuar consulta o busqueda;
+  }
+endif
+
+:Fin de la tarea;
+stop
+
+legend right
+  |= Rol |= Acciones UX |
+  | Administrador | Consulta, busca, registra y cambia vigencia |
+  | Medico | Consulta y busca |
+  | Enfermera | Consulta y busca |
+endlegend
+
+@enduml
