@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Semana 8 | Wireframes del Catálogo de medicamentos</title>
+    <link rel="stylesheet" href="semana-08-wireframes.css">
+</head>
+<body>
+    <header class="document-header">
+        <p class="overline">Análisis de Sistemas II · Semana 8</p>
+        <h1>Wireframes del Catálogo de medicamentos</h1>
+        <p>María Yamilet Lindo Pablo · 1890-23-14827 · Evidencia low-fidelity</p>
+        <nav aria-label="Wireframes">
+            <a href="#wf-1">01 Listado</a>
+            <a href="#wf-2">02 Alta</a>
+            <a href="#wf-3">03 Validación</a>
+            <a href="#wf-4">04 Confirmación</a>
+            <a href="#wf-5">05 Vacío</a>
+            <a href="#wf-6">06 Éxito</a>
+        </nav>
+    </header>
+
+    <main>
+        <p class="privacy-note"><strong>Protección de datos:</strong> estos wireframes usan únicamente datos ficticios de catálogo. No contienen pacientes, diagnósticos, recetas reales ni información clínica identificable.</p>
+
+        <article class="wireframe" id="wf-1">
+            <div class="wireframe-title">
+                <div><span>Wireframe 01</span><h2>Listado principal y búsqueda</h2></div>
+                <strong>Rol mostrado: Administrador</strong>
+            </div>
+            <div class="screen">
+                <header class="app-bar">
+                    <div><b>Micro-HIS</b><small>Catálogo de medicamentos</small></div>
+                    <span>Administrador</span>
+                </header>
+                <div class="screen-content">
+                    <div class="title-row">
+                        <div><p class="eyebrow">Consulta y vigencia</p><h3>Medicamentos</h3></div>
+                        <button type="button" class="button button-dark">+ Registrar medicamento</button>
+                    </div>
+                    <div class="loading" role="status"><span class="spinner">◌</span> Cargando medicamentos...</div>
+                    <div class="search-row">
+                        <label><span>Buscar en el catálogo</span><input type="search" value="aliv" aria-label="Buscar por nombre comercial o genérico"></label>
+                        <button type="button" class="button">Buscar</button>
+                        <button type="button" class="link-button">Limpiar búsqueda</button>
+                    </div>
+                    <p class="result-count">2 coincidencias por nombre comercial o genérico</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Medicamento</th><th>Presentación</th><th>Vigencia</th><th>Acción</th></tr></thead>
+                            <tbody>
+                                <tr><td><b>Alivion</b><small>Compuesto Alfa</small></td><td>Tabletas<small>250 mg</small></td><td><span class="tag">ACTIVE · ACTIVO</span><small>Vigente y seleccionable</small></td><td><button type="button" class="text-action">Desactivar</button></td></tr>
+                                <tr><td><b>Alivion Plus</b><small>Compuesto Beta</small></td><td>Solución<small>100 mg/5 ml</small></td><td><span class="tag tag-muted">INACTIVE · INACTIVO</span><small>No vigente ni seleccionable</small></td><td><button type="button" class="text-action">Activar</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="role-variant"><b>Variante Médico / Enfermera:</b> conserva búsqueda, datos y vigencia; oculta “Registrar medicamento” y la columna “Acción”.</p>
+                </div>
+            </div>
+            <aside class="annotations" aria-label="Anotaciones del wireframe 1">
+                <h3>Anotaciones</h3>
+                <dl><dt>Objetivo</dt><dd>Consultar, buscar y reconocer vigencia.</dd><dt>Rol</dt><dd>Administrador; variante anotada para Médico y Enfermera.</dd><dt>Estado</dt><dd>Carga inicial y listado con resultados.</dd><dt>Acción principal</dt><dd>Buscar; las acciones administrativas dependen del rol.</dd><dt>Validaciones</dt><dd>Término opcional, con espacios externos recortados.</dd><dt>Mensaje</dt><dd>“Cargando medicamentos...” y cantidad de coincidencias.</dd><dt>Regla</dt><dd>No mostrar controles sin permiso; el estado siempre tiene texto.</dd><dt>Recuperación</dt><dd>Limpiar búsqueda o reintentar la carga.</dd></dl>
+            </aside>
+        </article>
+
+        <article class="wireframe" id="wf-2">
+            <div class="wireframe-title">
+                <div><span>Wireframe 02</span><h2>Alta de medicamento</h2></div>
+                <strong>Rol: Administrador</strong>
+            </div>
+            <div class="screen narrow-screen">
+                <header class="app-bar"><button type="button" class="back-button">← Volver al catálogo</button><span>Administrador</span></header>
+                <form class="screen-content form-mockup">
+                    <p class="eyebrow">Nuevo registro</p>
+                    <h3>Registrar medicamento</h3>
+                    <p>Los campos marcados con * son obligatorios.</p>
+                    <label>Nombre comercial *<input type="text" value="Calmofin"><small>Nombre con el que se identifica el medicamento en el catálogo.</small></label>
+                    <label>Nombre genérico *<input type="text" value="Compuesto Gamma"><small>Principio o denominación genérica del medicamento.</small></label>
+                    <div class="field-grid">
+                        <label>Presentación *<input type="text" value="Tabletas"><small>Ejemplo: tabletas.</small></label>
+                        <label>Concentración *<input type="text" value="500 mg"><small>Ejemplo de formato: 500 mg.</small></label>
+                    </div>
+                    <label>Estado *<select><option>ACTIVE · ACTIVO</option><option>INACTIVE · INACTIVO</option></select><small>Un medicamento inactivo permanece en el catálogo, pero no debe seleccionarse en nuevos procesos clínicos.</small></label>
+                    <div class="form-actions"><button type="button" class="button">Cancelar</button><button type="button" class="button button-dark">Guardar medicamento</button></div>
+                    <p class="data-caption">Datos ficticios de catálogo. No contiene información de pacientes.</p>
+                </form>
+            </div>
+            <aside class="annotations" aria-label="Anotaciones del wireframe 2">
+                <h3>Anotaciones</h3>
+                <dl><dt>Objetivo</dt><dd>Registrar todos los datos requeridos.</dd><dt>Rol</dt><dd>Administrador.</dd><dt>Estado</dt><dd>Edición.</dd><dt>Acción principal</dt><dd>Guardar medicamento.</dd><dt>Validaciones</dt><dd>Obligatorios, trim, estado válido y unicidad.</dd><dt>Mensaje</dt><dd>Ayudas junto a los campos antes de guardar.</dd><dt>Regla</dt><dd>Cancelar vuelve sin registrar; Guardar muestra progreso.</dd><dt>Recuperación</dt><dd>Conservar datos válidos y enfocar el primer error.</dd></dl>
+            </aside>
+        </article>
+
+        <article class="wireframe" id="wf-3">
+            <div class="wireframe-title">
+                <div><span>Wireframe 03</span><h2>Validaciones y error recuperable</h2></div>
+                <strong>Rol: Administrador</strong>
+            </div>
+            <div class="screen narrow-screen">
+                <header class="app-bar"><b>Registrar medicamento</b><span>Administrador</span></header>
+                <form class="screen-content form-mockup">
+                    <div class="alert alert-error" role="alert"><b>Revise los campos indicados.</b><span>Los datos correctos se conservaron.</span></div>
+                    <label class="field-error">Nombre comercial *<input type="text" value="Alivion" aria-describedby="name-error"><span class="error-text" id="name-error">Error: Ya existe un medicamento con ese nombre.</span><small>Pruebe un nombre comercial diferente.</small></label>
+                    <label class="field-error">Nombre genérico *<input type="text" value="" aria-describedby="generic-error"><span class="error-text" id="generic-error">Error: Este campo es obligatorio.</span></label>
+                    <div class="field-grid">
+                        <label class="field-error">Presentación *<input type="text" value="   " aria-describedby="presentation-error"><span class="error-text" id="presentation-error">Error: Este campo es obligatorio.</span></label>
+                        <label>Concentración *<input type="text" value="500 mg"><small>Dato válido conservado.</small></label>
+                    </div>
+                    <label>Estado *<select><option>ACTIVE · ACTIVO</option></select><small>Dato válido conservado.</small></label>
+                    <div class="form-actions"><button type="button" class="button">Cancelar</button><button type="button" class="button button-dark">Corregir y guardar</button></div>
+                </form>
+            </div>
+            <aside class="annotations" aria-label="Anotaciones del wireframe 3">
+                <h3>Anotaciones</h3>
+                <dl><dt>Objetivo</dt><dd>Explicar errores y permitir corregirlos.</dd><dt>Rol</dt><dd>Administrador.</dd><dt>Estado</dt><dd>Formulario con errores recuperables.</dd><dt>Acción principal</dt><dd>Corregir y guardar.</dd><dt>Validaciones</dt><dd>Duplicado y campos obligatorios tras aplicar trim.</dd><dt>Mensaje</dt><dd>Resumen y mensajes específicos debajo de cada campo.</dd><dt>Regla</dt><dd>No depender solo del color ni borrar concentración/estado válidos.</dd><dt>Recuperación</dt><dd>Foco inicial en Nombre y nuevo intento en el mismo formulario.</dd></dl>
+            </aside>
+        </article>
+
+        <article class="wireframe" id="wf-4">
+            <div class="wireframe-title">
+                <div><span>Wireframe 04</span><h2>Confirmación de cambio de vigencia</h2></div>
+                <strong>Rol: Administrador</strong>
+            </div>
+            <div class="screen modal-screen">
+                <div class="screen-content ghost-content" aria-hidden="true"><h3>Catálogo</h3><div class="ghost-line"></div><div class="ghost-line"></div><div class="ghost-line short"></div></div>
+                <section class="dialog" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+                    <span class="dialog-kicker">Confirmar acción</span>
+                    <h3 id="dialog-title">¿Desactivar este medicamento?</h3>
+                    <p id="dialog-description"><b>Alivion</b> permanecerá en el catálogo, pero no estará vigente ni disponible para nuevos procesos clínicos.</p>
+                    <div class="record-summary"><span>Estado actual</span><b>ACTIVE · ACTIVO</b><span>Estado resultante</span><b>INACTIVE · INACTIVO</b></div>
+                    <div class="form-actions"><button type="button" class="button">Cancelar</button><button type="button" class="button button-dark">Desactivar</button></div>
+                </section>
+            </div>
+            <aside class="annotations" aria-label="Anotaciones del wireframe 4">
+                <h3>Anotaciones</h3>
+                <dl><dt>Objetivo</dt><dd>Prevenir cambios accidentales y explicar el efecto.</dd><dt>Rol</dt><dd>Administrador.</dd><dt>Estado</dt><dd>Confirmación previa a desactivar.</dd><dt>Acción principal</dt><dd>Desactivar.</dd><dt>Validaciones</dt><dd>Medicamento y estado de destino explícitos.</dd><dt>Mensaje</dt><dd>Pregunta específica, nombre y consecuencia.</dd><dt>Regla</dt><dd>Cancelar conserva ACTIVE; no usar “Aceptar” como acción ambigua.</dd><dt>Recuperación</dt><dd>Ante fallo, conservar ACTIVO y permitir reintentar.</dd></dl>
+            </aside>
+        </article>
+
+        <article class="wireframe" id="wf-5">
+            <div class="wireframe-title">
+                <div><span>Wireframe 05</span><h2>Catálogo vacío y búsqueda sin resultados</h2></div>
+                <strong>Roles: todos</strong>
+            </div>
+            <div class="state-pair">
+                <section class="screen compact-screen">
+                    <header class="app-bar"><b>Catálogo</b><span>Administrador</span></header>
+                    <div class="empty-state screen-content">
+                        <div class="empty-icon">□</div><p class="eyebrow">Catálogo vacío</p><h3>No hay medicamentos registrados.</h3><p>Cuando registre el primero, aparecerá aquí.</p><button type="button" class="button button-dark">Registrar primer medicamento</button><small>Esta acción solo se muestra al Administrador.</small>
+                    </div>
+                </section>
+                <section class="screen compact-screen">
+                    <header class="app-bar"><b>Catálogo</b><span>Médico</span></header>
+                    <div class="screen-content"><div class="search-row"><label><span>Buscar</span><input type="search" value="Nuberal"></label></div><div class="empty-state"><div class="empty-icon">?</div><p class="eyebrow">0 coincidencias</p><h3>No se encontraron medicamentos para “Nuberal”.</h3><p>Revise el texto o vuelva al catálogo completo.</p><button type="button" class="button button-dark">Limpiar búsqueda</button><button type="button" class="link-button">Volver al listado</button></div></div>
+                </section>
+            </div>
+            <aside class="annotations" aria-label="Anotaciones del wireframe 5">
+                <h3>Anotaciones</h3>
+                <dl><dt>Objetivo</dt><dd>Distinguir catálogo vacío de búsqueda sin coincidencias.</dd><dt>Rol</dt><dd>Todos; “Registrar” únicamente para Administrador.</dd><dt>Estado</dt><dd>Vacío y sin resultados.</dd><dt>Acción principal</dt><dd>Registrar o limpiar búsqueda según contexto y permiso.</dd><dt>Validaciones</dt><dd>El término buscado permanece visible.</dd><dt>Mensaje</dt><dd>Mensajes específicos para cada causa.</dd><dt>Regla</dt><dd>No ofrecer una acción administrativa a Médico o Enfermera.</dd><dt>Recuperación</dt><dd>Limpiar, volver al listado o iniciar el alta autorizada.</dd></dl>
+            </aside>
+        </article>
+
+        <article class="wireframe" id="wf-6">
+            <div class="wireframe-title">
+                <div><span>Wireframe 06</span><h2>Alta exitosa</h2></div>
+                <strong>Rol: Administrador</strong>
+            </div>
+            <div class="screen">
+                <header class="app-bar"><div><b>Micro-HIS</b><small>Catálogo de medicamentos</small></div><span>Administrador</span></header>
+                <div class="screen-content">
+                    <div class="alert alert-success" role="status"><b>Medicamento registrado correctamente.</b><span>Calmofin ya está visible en el catálogo.</span></div>
+                    <div class="title-row"><div><p class="eyebrow">Registro incorporado</p><h3>Catálogo</h3></div><button type="button" class="button button-dark">+ Registrar otro</button></div>
+                    <div class="table-wrap"><table><thead><tr><th>Medicamento</th><th>Presentación</th><th>Vigencia</th><th>Acción</th></tr></thead><tbody><tr class="new-row"><td><span class="new-marker">NUEVO</span><b>Calmofin</b><small>Compuesto Gamma</small></td><td>Tabletas<small>500 mg</small></td><td><span class="tag">ACTIVE · ACTIVO</span><small>Vigente y seleccionable</small></td><td><button type="button" class="text-action">Desactivar</button></td></tr><tr><td><b>Dermasol</b><small>Compuesto Delta</small></td><td>Crema<small>2 %</small></td><td><span class="tag tag-muted">INACTIVE · INACTIVO</span><small>No vigente ni seleccionable</small></td><td><button type="button" class="text-action">Activar</button></td></tr></tbody></table></div>
+                    <p class="data-caption">Si el listado no se actualiza, use “Recargar catálogo”; el alta no se vuelve a enviar.</p>
+                </div>
+            </div>
+            <aside class="annotations" aria-label="Anotaciones del wireframe 6">
+                <h3>Anotaciones</h3>
+                <dl><dt>Objetivo</dt><dd>Confirmar el alta y ubicar el registro nuevo.</dd><dt>Rol</dt><dd>Administrador.</dd><dt>Estado</dt><dd>Éxito.</dd><dt>Acción principal</dt><dd>Continuar consultando o registrar otro.</dd><dt>Validaciones</dt><dd>Superadas antes de presentar esta pantalla.</dd><dt>Mensaje</dt><dd>“Medicamento registrado correctamente.”</dd><dt>Regla</dt><dd>Mensaje visible y vigencia textual en el registro incorporado.</dd><dt>Recuperación</dt><dd>Recargar catálogo sin reenviar el formulario.</dd></dl>
+            </aside>
+        </article>
+    </main>
+
+    <footer>Semana 8 · Diseño UX académico · Catálogo de medicamentos · Datos completamente ficticios</footer>
+</body>
+</html>
