@@ -20,39 +20,23 @@ final class MedicationController
     ) {
     }
 
-    /**
-     * @param array<string, mixed> $server
-     * @param array<string, mixed> $query
-     * @param array<string, mixed> $form
-     * @return array<string, mixed>
-     */
-    public function handle(array $server, array $query, array $form): array
+    /** @return array<string, mixed> */
+    public function handle(MedicationWebRequest $request): array
     {
         $errors = [];
-        $input = static function (array $source, string $key): string {
-            $value = $source[$key] ?? '';
-            return is_scalar($value) ? (string) $value : '';
-        };
-        $selectedStatus = $input($form, 'status');
-        $formValues = [
-            'name' => $input($form, 'name'),
-            'generic_name' => $input($form, 'generic_name'),
-            'presentation' => $input($form, 'presentation'),
-            'concentration' => $input($form, 'concentration'),
-            'status' => $selectedStatus === '' ? 'ACTIVE' : $selectedStatus,
-        ];
+        $formValues = $request->medicationForm();
 
-        if (($server['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+        if ($request->method() === 'POST') {
             try {
-                $action = $input($form, 'action');
+                $action = $request->action();
 
                 if ($action === 'register') {
                     $medication = $this->registerMedication->execute(
-                        $input($form, 'name'),
-                        $input($form, 'generic_name'),
-                        $input($form, 'presentation'),
-                        $input($form, 'concentration'),
-                        $input($form, 'status'),
+                        $formValues['name'],
+                        $formValues['generic_name'],
+                        $formValues['presentation'],
+                        $formValues['concentration'],
+                        $formValues['status'],
                     );
                     $_SESSION['success'] = sprintf(
                         'Medicamento "%s" registrado correctamente.',
@@ -64,7 +48,7 @@ final class MedicationController
 
                 if ($action === 'toggle') {
                     $medication = $this->toggleMedicationStatus->execute(
-                        (int) $input($form, 'id')
+                        $request->id()
                     );
                     $_SESSION['success'] = sprintf(
                         'El medicamento "%s" ahora está %s.',
@@ -81,7 +65,7 @@ final class MedicationController
             }
         }
 
-        $search = trim($input($query, 'q'));
+        $search = $request->search();
 
         try {
             $medications = $this->searchMedications->execute($search);

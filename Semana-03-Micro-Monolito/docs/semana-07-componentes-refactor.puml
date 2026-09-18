@@ -1,0 +1,102 @@
+@startuml
+title Semana 7 - Diseño de componentes y refactorizacion\nCatalogo de Medicamentos
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+actor "Usuario Web" as WebUser
+actor "Cliente API" as ApiClient
+
+package "Presentation" {
+    component "public/index.php\nEntrada web" as WebEntry
+    component "Vista catalogo\ncatalog.php" as CatalogView
+    component "assets\napp.js + styles.css" as Assets
+    component "MedicationWebRequest" as WebRequest
+    component "MedicationController" as WebController
+    component "public/api.php\nEntrada REST" as ApiEntry
+    component "MedicationApiController" as ApiController
+}
+
+package "Application" {
+    component "RegisterMedication" as Register
+    component "SearchMedications" as Search
+    component "GetMedication" as Get
+    component "ToggleMedicationStatus" as Toggle
+    component "ChangeMedicationStatus" as Change
+}
+
+package "Domain" {
+    component "Medication" as Medication
+    component "MedicationStatus" as Status
+    interface "MedicationRepository" as Repository
+}
+
+package "Persistence" {
+    component "PdoMedicationRepository" as PdoRepository
+    component "InMemoryMedicationRepository" as MemoryRepository
+    component "DatabaseConnection" as DatabaseConnection
+}
+
+database "SQLite" as SQLite
+
+WebUser --> WebEntry : HTTP / formulario
+WebEntry --> WebRequest : crea con datos HTTP
+WebRequest --> WebController : entrada normalizada
+WebController --> CatalogView : datos de vista
+CatalogView --> Assets : carga
+CatalogView --> WebUser : HTML
+
+ApiClient --> ApiEntry : HTTP + JSON
+ApiEntry --> ApiController : ruta y entrada
+
+WebController --> Register : alta
+WebController --> Search : busqueda
+WebController --> Toggle : alternar vigencia
+
+ApiController --> Register : alta
+ApiController --> Search : busqueda
+ApiController --> Get : consulta por id
+ApiController --> Change : cambiar vigencia
+
+Register --> Medication : crea
+Register --> Repository : consulta / agrega
+Search --> Repository : busca
+Get --> Repository : consulta
+Toggle --> Medication : consulta vigencia
+Toggle --> Status : estado opuesto
+Toggle --> Repository : consulta / actualiza
+Change --> Status : valida estado
+Change --> Repository : consulta / actualiza
+Medication --> Status : conserva estado
+
+PdoRepository ..|> Repository
+MemoryRepository ..|> Repository
+PdoRepository --> DatabaseConnection : usa PDO
+DatabaseConnection --> SQLite : conecta
+PdoRepository --> SQLite : SQL parametrizado
+
+note right of WebRequest
+Refactor de Semana 7:
+encapsula lectura y conversion
+de la entrada HTTP web.
+end note
+
+note right of WebController
+Coordina Application y la vista.
+No contiene SQL.
+end note
+
+note bottom of Medication
+Las reglas de campos obligatorios,
+estado, vigencia y seleccion
+permanecen en Domain.
+end note
+
+note bottom of Repository
+Application depende del contrato.
+Persistence proporciona
+las implementaciones.
+end note
+
+@enduml

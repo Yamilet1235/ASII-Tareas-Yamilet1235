@@ -15,6 +15,7 @@ use MicroHis\Domain\Repository\MedicationRepository;
 use MicroHis\Persistence\DatabaseConnection;
 use MicroHis\Persistence\InMemoryMedicationRepository;
 use MicroHis\Persistence\PdoMedicationRepository;
+use MicroHis\Presentation\MedicationWebRequest;
 
 require dirname(__DIR__) . '/src/bootstrap.php';
 
@@ -221,6 +222,69 @@ $tests['Persistencia PDO: integra alta, búsqueda, unicidad y estado'] =
         assertTrue(
             !$changed->isCurrent(),
             'El repositorio debe guardar el estado INACTIVE.'
+        );
+    };
+
+$tests['Presentation: interpreta método, acción e identificador web'] =
+    static function (): void {
+        $request = new MedicationWebRequest(
+            ['REQUEST_METHOD' => ' post '],
+            [],
+            ['action' => ' toggle ', 'id' => '17']
+        );
+
+        assertTrue(
+            $request->method() === 'POST',
+            'El método HTTP debe normalizarse en mayúsculas.'
+        );
+
+        assertTrue(
+            $request->action() === 'toggle',
+            'La acción debe obtenerse sin espacios externos.'
+        );
+
+        assertTrue(
+            $request->id() === 17,
+            'El identificador debe convertirse a entero.'
+        );
+    };
+
+$tests['Presentation: normaliza el término de búsqueda web'] =
+    static function (): void {
+        $request = new MedicationWebRequest(
+            [],
+            ['q' => '  compuesto ficticio  '],
+            []
+        );
+
+        assertTrue(
+            $request->search() === 'compuesto ficticio',
+            'La búsqueda debe excluir espacios externos.'
+        );
+    };
+
+$tests['Presentation: prepara formulario y estado ACTIVE por defecto'] =
+    static function (): void {
+        $request = new MedicationWebRequest(
+            [],
+            [],
+            [
+                'name' => 'Vitalex Web',
+                'generic_name' => 'compuesto ficticio web',
+                'presentation' => 'Tabletas',
+                'concentration' => '20 mg',
+            ]
+        );
+
+        assertTrue(
+            $request->medicationForm() === [
+                'name' => 'Vitalex Web',
+                'generic_name' => 'compuesto ficticio web',
+                'presentation' => 'Tabletas',
+                'concentration' => '20 mg',
+                'status' => 'ACTIVE',
+            ],
+            'El formulario debe conservar los campos y usar ACTIVE por defecto.'
         );
     };
 
