@@ -8,6 +8,7 @@ use MicroHis\Application\UseCase\ToggleMedicationStatus;
 use MicroHis\Persistence\DatabaseConnection;
 use MicroHis\Persistence\PdoMedicationRepository;
 use MicroHis\Presentation\MedicationController;
+use MicroHis\Presentation\MedicationWebRequest;
 
 require dirname(__DIR__) . '/src/bootstrap.php';
 
@@ -30,7 +31,8 @@ try {
         new ToggleMedicationStatus($repository),
     );
 
-    $viewData = $controller->handle($_SERVER, $_GET, $_POST);
+    $request = new MedicationWebRequest($_SERVER, $_GET, $_POST);
+    $viewData = $controller->handle($request);
 
     if ($viewData['redirect'] === true) {
         header('Location: /', true, 303);
