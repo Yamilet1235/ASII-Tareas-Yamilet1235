@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Prototipo navegable desktop y móvil del Catálogo de Medicamentos, Semana 11.">
+    <title>Semana 11 | Prototipo navegable del Catálogo de Medicamentos</title>
+    <link rel="stylesheet" href="semana-11-prototipo.css">
+    <script src="semana-11-prototipo.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+    <div id="app-shell">
+        <header class="site-header">
+            <div class="header-inner">
+                <button class="brand" id="brand-home" type="button" aria-label="Ir al catálogo completo">
+                    <span class="brand-mark" aria-hidden="true">Rx</span>
+                    <span><strong>Micro-HIS</strong><small>Catálogo de medicamentos</small></span>
+                </button>
+
+                <div class="role-control">
+                    <label for="role-select">Rol de demostración</label>
+                    <select id="role-select">
+                        <option value="Administrador">Administrador</option>
+                        <option value="Médico">Médico</option>
+                        <option value="Enfermera">Enfermera</option>
+                    </select>
+                    <small>Simulación visual, no autenticación real.</small>
+                </div>
+            </div>
+        </header>
+
+        <main id="contenido" class="page-shell" tabindex="-1">
+            <div id="global-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+            <section id="catalog-view" class="view" aria-labelledby="catalog-title">
+                <div class="hero">
+                    <div>
+                        <p class="eyebrow">Consulta, búsqueda y vigencia</p>
+                        <h1 id="catalog-title">Catálogo de<br><span>medicamentos</span></h1>
+                        <p class="hero-copy">Datos ficticios para demostrar el flujo académico de Semana 11.</p>
+                    </div>
+                    <div class="hero-stat" aria-label="Resumen del catálogo">
+                        <strong id="result-count">2</strong>
+                        <span id="result-label">medicamentos en catálogo</span>
+                    </div>
+                </div>
+
+                <div id="catalog-feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+                <section class="catalog-panel" aria-labelledby="list-title">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="section-number">01 / Catálogo</p>
+                            <h2 id="list-title">Medicamentos disponibles</h2>
+                        </div>
+                        <button class="button button-primary admin-only" id="open-register" type="button">Registrar medicamento</button>
+                    </div>
+
+                    <form id="search-form" class="search-form" role="search" novalidate>
+                        <label for="search-input">Buscar por nombre comercial o nombre genérico</label>
+                        <div class="search-controls">
+                            <input id="search-input" type="search" autocomplete="off" placeholder="Ejemplo: Alivion o Compuesto Alfa">
+                            <button class="button button-dark" type="submit">Buscar</button>
+                            <button class="button button-quiet" id="clear-search" type="button" hidden>Limpiar búsqueda</button>
+                        </div>
+                    </form>
+
+                    <p id="search-summary" class="search-summary" role="status" aria-live="polite"></p>
+                    <div id="catalog-results"></div>
+                </section>
+            </section>
+
+            <section id="register-view" class="view form-view" aria-labelledby="register-title" hidden>
+                <button class="back-link" id="back-from-register" type="button"><span aria-hidden="true">&larr;</span> Volver al catálogo</button>
+
+                <div class="form-layout">
+                    <header class="form-intro">
+                        <p class="eyebrow">Registro administrativo</p>
+                        <h1 id="register-title">Registrar medicamento</h1>
+                        <p>Agregue un medicamento ficticio al catálogo simulado. El nombre comercial debe ser único.</p>
+                        <div class="rule-card">
+                            <strong>Antes de guardar</strong>
+                            <p>Todos los campos son obligatorios. La unicidad ignora espacios externos, mayúsculas, minúsculas y acentos.</p>
+                        </div>
+                    </header>
+
+                    <form id="register-form" class="register-form" novalidate>
+                        <div id="form-error-summary" class="error-summary" role="alert" tabindex="-1" hidden>
+                            <strong>Revise los campos indicados.</strong>
+                            <span>Los datos correctos se conservaron.</span>
+                        </div>
+
+                        <div class="field">
+                            <label for="medicine-name">Nombre comercial <span>(obligatorio)</span></label>
+                            <input id="medicine-name" name="name" type="text" maxlength="120" required aria-describedby="medicine-name-help medicine-name-error">
+                            <small id="medicine-name-help">Nombre con el que se identifica en el catálogo.</small>
+                            <span class="field-error" id="medicine-name-error" hidden></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="generic-name">Nombre genérico <span>(obligatorio)</span></label>
+                            <input id="generic-name" name="genericName" type="text" maxlength="120" required aria-describedby="generic-name-help generic-name-error">
+                            <small id="generic-name-help">Principio o denominación genérica ficticia.</small>
+                            <span class="field-error" id="generic-name-error" hidden></span>
+                        </div>
+
+                        <div class="field-pair">
+                            <div class="field">
+                                <label for="presentation">Presentación <span>(obligatorio)</span></label>
+                                <input id="presentation" name="presentation" type="text" maxlength="100" required aria-describedby="presentation-help presentation-error">
+                                <small id="presentation-help">Ejemplo: Tabletas.</small>
+                                <span class="field-error" id="presentation-error" hidden></span>
+                            </div>
+
+                            <div class="field">
+                                <label for="concentration">Concentración <span>(obligatorio)</span></label>
+                                <input id="concentration" name="concentration" type="text" maxlength="80" required aria-describedby="concentration-help concentration-error">
+                                <small id="concentration-help">Ejemplo de formato: 500 mg.</small>
+                                <span class="field-error" id="concentration-error" hidden></span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="initial-status">Estado inicial <span>(obligatorio)</span></label>
+                            <select id="initial-status" name="status" required aria-describedby="initial-status-help initial-status-error">
+                                <option value="ACTIVE">ACTIVE / ACTIVO</option>
+                                <option value="INACTIVE">INACTIVE / INACTIVO</option>
+                            </select>
+                            <small id="initial-status-help">INACTIVO permanece en el catálogo, pero no está vigente ni seleccionable.</small>
+                            <span class="field-error" id="initial-status-error" hidden></span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="button button-quiet" id="cancel-register" type="button">Cancelar</button>
+                            <button class="button button-primary" type="submit">Guardar medicamento</button>
+                        </div>
+                        <p class="privacy-note">Datos ficticios de catálogo. No contiene información de pacientes.</p>
+                    </form>
+                </div>
+            </section>
+
+            <section id="success-view" class="view success-view" aria-labelledby="success-title" hidden>
+                <div class="success-mark" aria-hidden="true">&#10003;</div>
+                <p class="eyebrow">Alta exitosa</p>
+                <h1 id="success-title">Medicamento registrado correctamente.</h1>
+                <p id="success-description">El nuevo medicamento ya está disponible en el catálogo simulado.</p>
+                <article id="new-medication-preview" class="success-preview"></article>
+                <div class="success-actions">
+                    <button class="button button-primary" id="success-catalog" type="button">Volver al catálogo</button>
+                    <button class="button button-quiet admin-only" id="success-register-another" type="button">Registrar otro</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Semana 11 / ASII-14 / Prototipo académico navegable</p>
+            <p>María Yamilet Lindo Pablo / 1890-23-14827</p>
+        </footer>
+    </div>
+
+    <div id="modal-backdrop" class="modal-backdrop" hidden>
+        <section id="status-dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-effect">
+            <span class="dialog-mark" aria-hidden="true">!</span>
+            <p class="eyebrow">Confirmar cambio de vigencia</p>
+            <h2 id="dialog-title">¿Desactivar Alivion?</h2>
+            <p id="dialog-effect">El medicamento permanecerá en el catálogo, pero dejará de estar vigente y seleccionable.</p>
+
+            <dl class="status-change">
+                <div><dt>Estado actual</dt><dd id="dialog-current-status">ACTIVE / ACTIVO</dd></div>
+                <div><dt>Estado destino</dt><dd id="dialog-target-status">INACTIVE / INACTIVO</dd></div>
+            </dl>
+
+            <div class="dialog-actions">
+                <button class="button button-quiet" id="dialog-cancel" type="button">Cancelar</button>
+                <button class="button button-danger" id="dialog-confirm" type="button">Confirmar desactivación</button>
+            </div>
+            <p class="keyboard-note">Puede presionar Escape para cancelar. El foco volverá a la acción que abrió esta confirmación.</p>
+        </section>
+    </div>
+</body>
+</html>
