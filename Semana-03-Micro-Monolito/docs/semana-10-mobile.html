@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Evidencia responsive de Semana 10 para el Catálogo de Medicamentos entre 320 y 430 píxeles.">
+    <title>Semana 10 | Diseño móvil del Catálogo de Medicamentos</title>
+    <link rel="stylesheet" href="semana-10-mobile.css">
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar a las pantallas</a>
+
+    <header class="masthead">
+        <div class="masthead-copy">
+            <p class="overline">Análisis de Sistemas II / ASII-14 / Semana 10</p>
+            <h1>Catálogo claro,<br><span>incluso en 320 px.</span></h1>
+            <p class="lead">Propuesta responsive para buscar, consultar, registrar y controlar la vigencia de medicamentos sin perder contexto ante una conexión limitada.</p>
+            <dl class="identity">
+                <div><dt>Estudiante</dt><dd>María Yamilet Lindo Pablo</dd></div>
+                <div><dt>Carné</dt><dd>1890-23-14827</dd></div>
+                <div><dt>Módulo</dt><dd>Catálogo de Medicamentos</dd></div>
+            </dl>
+        </div>
+        <div class="range-card" aria-label="Rango móvil evaluado">
+            <span>Rango objetivo</span>
+            <strong>320-430</strong>
+            <small>píxeles / sin scroll horizontal operativo</small>
+        </div>
+    </header>
+
+    <nav class="page-nav" aria-label="Pantallas de la evidencia">
+        <a href="#catalogo">01 Catálogo</a>
+        <a href="#alta">02 Alta</a>
+        <a href="#confirmacion">03 Vigencia</a>
+        <a href="#conexion">04 Recuperación</a>
+    </nav>
+
+    <main id="contenido">
+        <section class="intro-band" aria-labelledby="criterio-title">
+            <div>
+                <p class="section-label">Criterio rector</p>
+                <h2 id="criterio-title">Una tarea principal. El contexto siempre visible.</h2>
+            </div>
+            <p>La tabla se transforma en tarjetas; el alta se separa en una vista de una columna; la vigencia exige confirmación; los fallos conservan término, contenido anterior y último estado confirmado.</p>
+        </section>
+
+        <article class="showcase" id="catalogo">
+            <header class="showcase-heading">
+                <div><span class="screen-number">01</span><p class="section-label">Consulta y búsqueda</p><h2>Catálogo móvil</h2></div>
+                <p>El medicamento y su vigencia aparecen primero. Presentación y concentración comparten una línea; la acción pertenece visual y accesiblemente a una sola tarjeta.</p>
+            </header>
+
+            <div class="stage stage-warm">
+                <div class="phone phone-375" aria-label="Propuesta de catálogo a 375 píxeles">
+                    <div class="phone-top" aria-hidden="true"><span></span></div>
+                    <div class="mobile-screen">
+                        <header class="app-header">
+                            <a class="app-brand" href="#catalogo" aria-label="Catálogo de Medicamentos"><span class="rx">Rx</span><span><strong>Micro-HIS</strong><small>Catálogo</small></span></a>
+                            <button class="icon-button" type="button" aria-label="Registrar medicamento">+</button>
+                        </header>
+
+                        <div class="mobile-content">
+                            <p class="mobile-kicker">Consulta y vigencia</p>
+                            <div class="mobile-title-row"><h3>Medicamentos</h3><button class="text-action" type="button">Registrar</button></div>
+
+                            <form class="mobile-search" role="search">
+                                <label for="search-catalog">Buscar por nombre comercial o genérico</label>
+                                <div class="search-controls">
+                                    <input id="search-catalog" type="search" value="aliv" aria-describedby="catalog-search-help">
+                                    <button class="button button-primary button-compact" type="button">Buscar</button>
+                                </div>
+                                <div class="search-meta" id="catalog-search-help"><span>2 resultados</span><button type="button" class="inline-button">Limpiar búsqueda</button></div>
+                            </form>
+
+                            <div class="card-list" aria-label="Resultados de ejemplo">
+                                <article class="medicine-card">
+                                    <div class="medicine-heading"><h4>Alivion</h4><span class="status status-active">ACTIVO</span></div>
+                                    <p class="dose"><strong>Tabletas</strong><span aria-hidden="true">·</span> 250 mg</p>
+                                    <p class="generic"><span>Nombre genérico</span>Compuesto Alfa</p>
+                                    <p class="status-detail">Vigente y seleccionable</p>
+                                    <button class="button button-secondary button-full" type="button" aria-label="Desactivar Alivion">Desactivar</button>
+                                </article>
+
+                                <article class="medicine-card medicine-card-inactive">
+                                    <div class="medicine-heading"><h4>Alivion Plus</h4><span class="status status-inactive">INACTIVO</span></div>
+                                    <p class="dose"><strong>Solución</strong><span aria-hidden="true">·</span> 100 mg/5 ml</p>
+                                    <p class="generic"><span>Nombre genérico</span>Compuesto Beta</p>
+                                    <p class="status-detail">No vigente ni seleccionable</p>
+                                    <button class="button button-secondary button-full" type="button" aria-label="Activar Alivion Plus">Activar</button>
+                                </article>
+                            </div>
+
+                            <section class="state-samples" aria-label="Estados alternos de la búsqueda">
+                                <p class="sample-title">Estados de la misma pantalla</p>
+                                <div class="mini-state" role="status"><span class="loader" aria-hidden="true"></span><div><strong>Buscando medicamentos...</strong><small>El catálogo conserva su lugar.</small></div></div>
+                                <div class="mini-state"><span class="state-symbol" aria-hidden="true">0</span><div><strong>Sin resultados para “Nuberal”.</strong><small>Revise el término o limpie la búsqueda.</small></div></div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="phone-bottom" aria-hidden="true"><span></span></div>
+                </div>
+
+                <aside class="notes-card" aria-label="Decisiones del catálogo móvil">
+                    <span class="breakpoint-tag">Vista de referencia / 375 px</span>
+                    <h3>De cuatro columnas a una lectura vertical</h3>
+                    <dl>
+                        <div><dt>Contenido</dt><dd>Nombre y vigencia primero; presentación y concentración agrupadas.</dd></div>
+                        <div><dt>Interacción</dt><dd>Buscar es la acción principal; Limpiar siempre está disponible con término activo.</dd></div>
+                        <div><dt>Estado</dt><dd>Carga, cero coincidencias y catálogo vacío usan mensajes diferentes.</dd></div>
+                        <div><dt>Accesibilidad</dt><dd>El nombre accesible de la acción incluye el medicamento.</dd></div>
+                    </dl>
+                </aside>
+            </div>
+        </article>
+
+        <article class="showcase" id="alta">
+            <header class="showcase-heading">
+                <div><span class="screen-number">02</span><p class="section-label">Registro administrativo</p><h2>Alta en una columna</h2></div>
+                <p>Las reglas se explican antes del envío. Las ayudas permanecen visibles al escribir y cada campo conserva espacio suficiente en el ancho mínimo.</p>
+            </header>
+
+            <div class="stage stage-blue stage-reverse">
+                <aside class="notes-card notes-card-dark" aria-label="Decisiones del formulario móvil">
+                    <span class="breakpoint-tag">Vista mínima / 320 px</span>
+                    <h3>Menos memoria, más guía</h3>
+                    <dl>
+                        <div><dt>Contenido</dt><dd>Cinco datos reales del módulo; no se añaden campos.</dd></div>
+                        <div><dt>Interacción</dt><dd>Guardar domina; Cancelar regresa sin registrar.</dd></div>
+                        <div><dt>Validación</dt><dd>Error junto al campo y foco al primer inválido al implementarse.</dd></div>
+                        <div><dt>Unicidad</dt><dd>Se explica que el nombre comercial no puede repetirse.</dd></div>
+                    </dl>
+                </aside>
+
+                <div class="phone phone-320" aria-label="Propuesta de alta a 320 píxeles">
+                    <div class="phone-top" aria-hidden="true"><span></span></div>
+                    <div class="mobile-screen">
+                        <header class="app-header app-header-simple">
+                            <button class="back-button" type="button" aria-label="Volver al catálogo">‹ <span>Catálogo</span></button>
+                            <strong>Nuevo</strong>
+                        </header>
+
+                        <form class="mobile-content mobile-form">
+                            <p class="mobile-kicker">Alta de medicamento</p>
+                            <h3>Registrar medicamento</h3>
+                            <p class="required-note"><strong>Todos los campos son obligatorios.</strong> Use únicamente datos ficticios.</p>
+
+                            <label for="medicine-name">Nombre comercial <span>(obligatorio)</span></label>
+                            <input id="medicine-name" type="text" value="Calmofin" aria-describedby="medicine-name-help">
+                            <small id="medicine-name-help">Debe ser único; se ignoran mayúsculas y espacios externos.</small>
+
+                            <label for="generic-name">Nombre genérico <span>(obligatorio)</span></label>
+                            <input id="generic-name" type="text" value="Compuesto Gamma" aria-describedby="generic-name-help">
+                            <small id="generic-name-help">Principio o denominación genérica del catálogo.</small>
+
+                            <label for="presentation">Presentación <span>(obligatorio)</span></label>
+                            <input id="presentation" type="text" value="Tabletas" aria-describedby="presentation-help">
+                            <small id="presentation-help">Ejemplo: Tabletas.</small>
+
+                            <label for="concentration">Concentración <span>(obligatorio)</span></label>
+                            <input id="concentration" type="text" value="500 mg" aria-describedby="concentration-help">
+                            <small id="concentration-help">Ejemplo de formato: 500 mg.</small>
+
+                            <label for="initial-status">Estado inicial <span>(obligatorio)</span></label>
+                            <select id="initial-status" aria-describedby="status-help">
+                                <option>ACTIVE · ACTIVO</option>
+                                <option>INACTIVE · INACTIVO</option>
+                            </select>
+                            <small id="status-help">INACTIVO permanece en catálogo, pero no está vigente ni seleccionable.</small>
+
+                            <div class="mobile-actions">
+                                <button class="button button-primary" type="button">Guardar medicamento</button>
+                                <button class="button button-quiet" type="button">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="phone-bottom" aria-hidden="true"><span></span></div>
+                </div>
+            </div>
+        </article>
+
+        <article class="showcase" id="confirmacion">
+            <header class="showcase-heading">
+                <div><span class="screen-number">03</span><p class="section-label">Prevención de errores</p><h2>Confirmar la vigencia</h2></div>
+                <p>El estado no cambia al abrir el diálogo. La decisión muestra origen, destino y efecto antes de realizar una única solicitud.</p>
+            </header>
+
+            <div class="stage stage-coral">
+                <div class="phone phone-375" aria-label="Propuesta de confirmación a 375 píxeles">
+                    <div class="phone-top" aria-hidden="true"><span></span></div>
+                    <div class="mobile-screen modal-context">
+                        <div class="context-content" aria-hidden="true">
+                            <div class="context-bar"></div><div class="context-block"></div><div class="context-block context-block-short"></div>
+                        </div>
+                        <section class="mobile-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-effect dialog-keyboard">
+                            <span class="dialog-mark" aria-hidden="true">!</span>
+                            <p class="mobile-kicker">Confirmar acción</p>
+                            <h3 id="dialog-title">¿Desactivar Alivion?</h3>
+                            <p id="dialog-effect">Permanecerá en el catálogo, pero dejará de estar vigente y seleccionable.</p>
+
+                            <div class="status-change">
+                                <div><span>Estado actual</span><strong>ACTIVE · ACTIVO</strong></div>
+                                <span class="change-arrow" aria-hidden="true">↓</span>
+                                <div><span>Estado destino</span><strong>INACTIVE · INACTIVO</strong></div>
+                            </div>
+
+                            <div class="dialog-actions">
+                                <button class="button button-quiet" type="button">Cancelar</button>
+                                <button class="button button-primary button-danger" type="button">Confirmar desactivación</button>
+                            </div>
+                            <p class="keyboard-note" id="dialog-keyboard">Teclado: foco dentro del diálogo; Escape cancela; al cerrar vuelve a “Desactivar Alivion”.</p>
+                        </section>
+                    </div>
+                    <div class="phone-bottom" aria-hidden="true"><span></span></div>
+                </div>
+
+                <aside class="notes-card" aria-label="Decisiones de confirmación">
+                    <span class="breakpoint-tag">Vista de referencia / 375 px</span>
+                    <h3>Confirmar sin ambigüedad</h3>
+                    <dl>
+                        <div><dt>Contenido</dt><dd>Alivion, ACTIVO, INACTIVO y consecuencia del cambio.</dd></div>
+                        <div><dt>Interacción</dt><dd>Cancelar y Escape no modifican; confirmar inicia la solicitud.</dd></div>
+                        <div><dt>Foco</dt><dd>Debe permanecer en el diálogo y retornar al botón de la tarjeta.</dd></div>
+                        <div><dt>Red</dt><dd>La tarjeta solo cambia tras una respuesta exitosa.</dd></div>
+                    </dl>
+                </aside>
+            </div>
+        </article>
+
+        <article class="showcase" id="conexion">
+            <header class="showcase-heading">
+                <div><span class="screen-number">04</span><p class="section-label">Conexión limitada</p><h2>Recuperar sin perder contexto</h2></div>
+                <p>El término permanece escrito y el contenido previo no desaparece. Un rótulo evita interpretarlo como resultado actualizado.</p>
+            </header>
+
+            <div class="stage stage-green stage-reverse">
+                <aside class="notes-card notes-card-dark" aria-label="Decisiones de recuperación">
+                    <span class="breakpoint-tag">Vista amplia / 430 px</span>
+                    <h3>El fallo explica y ofrece salida</h3>
+                    <dl>
+                        <div><dt>Contenido</dt><dd>Alivion permanece escrito; la tarjeta se identifica como resultado anterior.</dd></div>
+                        <div><dt>Interacción</dt><dd>Reintentar domina; Volver y Limpiar son alternativas.</dd></div>
+                        <div><dt>Recuperación</dt><dd>No se pierde el punto de partida ni se exige reescribir.</dd></div>
+                        <div><dt>Integridad</dt><dd>Una vigencia fallida conserva el último estado confirmado.</dd></div>
+                    </dl>
+                </aside>
+
+                <div class="phone phone-430" aria-label="Propuesta de recuperación a 430 píxeles">
+                    <div class="phone-top" aria-hidden="true"><span></span></div>
+                    <div class="mobile-screen">
+                        <header class="app-header app-header-simple">
+                            <button class="back-button" type="button" aria-label="Volver al catálogo">‹ <span>Catálogo</span></button>
+                            <strong>Búsqueda</strong>
+                        </header>
+
+                        <div class="mobile-content">
+                            <p class="mobile-kicker">Conexión limitada</p>
+                            <h3>Resultados</h3>
+
+                            <form class="mobile-search" role="search">
+                                <label for="search-error">Buscar por nombre comercial o genérico</label>
+                                <input id="search-error" type="search" value="Alivion">
+                            </form>
+
+                            <div class="network-alert" role="alert">
+                                <span class="network-icon" aria-hidden="true">!</span>
+                                <div><strong>No se pudieron actualizar los resultados.</strong><p>Conservamos tu búsqueda y los resultados anteriores.</p></div>
+                            </div>
+
+                            <button class="button button-primary button-full" type="button">Reintentar</button>
+                            <div class="secondary-links"><button type="button" class="inline-button">Volver</button><button type="button" class="inline-button">Limpiar búsqueda</button></div>
+
+                            <div class="previous-label"><span>Resultado anterior</span><small>No corresponde al último intento</small></div>
+                            <article class="medicine-card medicine-card-previous">
+                                <div class="medicine-heading"><h4>Alivion</h4><span class="status status-active">ACTIVO</span></div>
+                                <p class="dose"><strong>Tabletas</strong><span aria-hidden="true">·</span> 250 mg</p>
+                                <p class="generic"><span>Nombre genérico</span>Compuesto Alfa</p>
+                                <p class="status-detail">Último estado confirmado por el servidor</p>
+                            </article>
+
+                            <div class="integrity-note"><strong>Si fallara una desactivación:</strong> “No se pudo actualizar la vigencia. Alivion continúa ACTIVO.”</div>
+                        </div>
+                    </div>
+                    <div class="phone-bottom" aria-hidden="true"><span></span></div>
+                </div>
+            </div>
+        </article>
+
+        <section class="rules" aria-labelledby="rules-title">
+            <div class="rules-heading"><p class="section-label">Sistema responsive</p><h2 id="rules-title">Tres rangos, las mismas prioridades</h2></div>
+            <div class="rule-grid">
+                <article><strong>320-359</strong><span>Compacto</span><p>Una columna, 12 px laterales y acciones apiladas a ancho completo.</p></article>
+                <article><strong>360-399</strong><span>Equilibrado</span><p>Una columna, 16 px laterales y más separación sin ocultar acciones.</p></article>
+                <article><strong>400-430</strong><span>Amplio</span><p>Una columna, 18 px laterales; acciones breves pueden compartir fila.</p></article>
+            </div>
+            <p class="rules-note">En todos los rangos: controles de al menos 44 px, texto que puede envolver, estados con texto además de color y cero scroll horizontal obligatorio para operar.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Semana 10 / Diseño responsive académico / Datos ficticios de catálogo</p>
+        <p><a href="SEMANA-10-DISENO-MOVIL.md">Informe completo</a> <span aria-hidden="true">·</span> <a href="semana-10-breakpoints.md">Reglas de breakpoints</a></p>
+    </footer>
+</body>
+</html>
