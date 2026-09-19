@@ -1,0 +1,83 @@
+@startuml
+title Semana 11 - Mapa de navegación\nASII-14 Catálogo de Medicamentos
+
+skinparam backgroundColor #FFFDF8
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #10264A
+skinparam activity {
+    BackgroundColor #DCE9F8
+    BorderColor #1C54A2
+    FontColor #17243C
+    DiamondBackgroundColor #F2CF63
+    DiamondBorderColor #10264A
+}
+
+legend right
+  |= Color |= Alcance |
+  |<#DCE9F8> Azul | Todos los roles |
+  |<#F9E2DC> Coral | Solo Administrador |
+endlegend
+
+start
+:Catálogo;
+
+if (Acción seleccionada) then (Buscar)
+    :Buscar;
+    if (¿Hay coincidencias?) then (Sí)
+        :Resultados;
+        :Catálogo;
+    else (No)
+        :Sin resultados;
+        if (¿Registrar?) then (Sí / Administrador)
+            #F9E2DC:Registrar
+[Administrador];
+            #F9E2DC:Validación;
+            if (¿Nombre duplicado?) then (Sí)
+                #F9E2DC:Duplicado;
+                #F9E2DC:Corregir;
+                #F9E2DC:Éxito;
+                :Catálogo;
+            else (No)
+                #F9E2DC:Éxito;
+                :Catálogo;
+            endif
+        else (No / Limpiar)
+            :Catálogo;
+        endif
+    endif
+elseif (Registrar) then (Administrador)
+    #F9E2DC:Registrar
+[Administrador];
+    #F9E2DC:Validación;
+    if (¿Nombre duplicado?) then (Sí)
+        #F9E2DC:Duplicado;
+        #F9E2DC:Corregir;
+        #F9E2DC:Éxito;
+        :Catálogo;
+    else (No)
+        #F9E2DC:Éxito;
+        :Catálogo;
+    endif
+else (Cambiar vigencia / Administrador)
+    #F9E2DC:Cambiar vigencia
+[Administrador];
+    #F9E2DC:Confirmación;
+    if (¿Confirmar cambio?) then (Confirmar)
+        #F9E2DC:Éxito;
+        :Catálogo;
+    else (Cancelar o Escape)
+        #F9E2DC:Cancelar;
+        :Catálogo;
+    endif
+endif
+
+stop
+
+note bottom
+Administrador: consultar, buscar, registrar y activar/desactivar.
+Médico: consultar y buscar.
+Enfermera: consultar y buscar.
+El selector de rol es una simulación visual, no autenticación real.
+end note
+@enduml
