@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Evidencia visual de la evaluación de usabilidad y accesibilidad del Catálogo de Medicamentos, Semana 9.">
+    <title>Semana 9 | Hallazgos de usabilidad y accesibilidad</title>
+    <link rel="stylesheet" href="semana-09-hallazgos.css">
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="masthead">
+        <div class="masthead-inner">
+            <p class="overline">Análisis de Sistemas II · ASII-14 · Semana 9</p>
+            <h1>Auditoría de<br><span>usabilidad y accesibilidad</span></h1>
+            <p class="intro">Catálogo de Medicamentos · Evaluación trazable del diseño de Semana 8 y la interfaz funcional actual.</p>
+            <dl class="identity">
+                <div><dt>Estudiante</dt><dd>María Yamilet Lindo Pablo</dd></div>
+                <div><dt>Carné</dt><dd>1890-23-14827</dd></div>
+                <div><dt>Fecha</dt><dd>18 de septiembre de 2026</dd></div>
+            </dl>
+        </div>
+    </header>
+
+    <nav class="section-nav" aria-label="Secciones de la evidencia">
+        <a href="#resumen">Resumen</a>
+        <a href="#alcance">Alcance</a>
+        <a href="#hallazgos">Hallazgos</a>
+        <a href="#contraste">Contraste</a>
+        <a href="#backlog">Backlog</a>
+        <a href="#cumplimientos">Cumplimientos</a>
+    </nav>
+
+    <main id="contenido">
+        <section class="section" id="resumen" aria-labelledby="resumen-titulo">
+            <div class="section-heading">
+                <p class="section-number">01 / Resumen</p>
+                <h2 id="resumen-titulo">Una evaluación, dos fuentes de evidencia</h2>
+                <p>Los hallazgos se basan en líneas concretas de los wireframes y del código funcional. No se declara cumplimiento WCAG completo.</p>
+            </div>
+
+            <div class="metrics" aria-label="Resumen cuantitativo">
+                <article class="metric metric-total"><strong>8</strong><span>hallazgos reales</span></article>
+                <article class="metric metric-high"><strong>2</strong><span>prioridad alta</span></article>
+                <article class="metric metric-medium"><strong>5</strong><span>prioridad media</span></article>
+                <article class="metric metric-low"><strong>1</strong><span>prioridad baja</span></article>
+            </div>
+
+            <div class="source-grid">
+                <article class="source-card">
+                    <span class="source-mark">A</span>
+                    <h3>Wireframes de Semana 8</h3>
+                    <p>Un hallazgo: el diálogo muestra la confirmación, pero el artefacto estático no demuestra modalidad ni gestión de foco.</p>
+                </article>
+                <article class="source-card">
+                    <span class="source-mark">B</span>
+                    <h3>Interfaz funcional actual</h3>
+                    <p>Siete hallazgos: vigencia, recuperación de errores, ayudas, vacíos, nombres de acciones, fallo de búsqueda y placeholder.</p>
+                </article>
+                <article class="source-card source-card-wide">
+                    <span class="source-mark">C</span>
+                    <h3>Controles comprobados</h3>
+                    <p>Controles nativos, etiquetas de campos, regiones vivas, vigencia textual, foco de retorno tras toggle, conservación de valores y unicidad respaldada por dominio/repositorio.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section section-dark" id="alcance" aria-labelledby="alcance-titulo">
+            <div class="section-heading">
+                <p class="section-number">02 / Alcance</p>
+                <h2 id="alcance-titulo">Qué se inspeccionó</h2>
+            </div>
+            <div class="scope-columns">
+                <div>
+                    <h3>Semana 8</h3>
+                    <ul>
+                        <li><code>SEMANA-08-DISENO-UX.md</code></li>
+                        <li><code>semana-08-wireframes.html</code></li>
+                        <li><code>semana-08-wireframes.css</code></li>
+                        <li><code>semana-08-user-flow.puml</code></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Interfaz funcional</h3>
+                    <ul>
+                        <li><code>catalog.php</code></li>
+                        <li><code>public/assets/styles.css</code></li>
+                        <li><code>public/assets/app.js</code></li>
+                        <li>Controlador, casos de uso, dominio y repositorio relacionados</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Criterios</h3>
+                    <ul>
+                        <li>Diez heurísticas de Nielsen</li>
+                        <li>Teclado, foco y nombres accesibles</li>
+                        <li>Contraste calculado desde colores reales</li>
+                        <li>Mensajes y prevención de errores</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="scope-note"><strong>Límite:</strong> revisión estática académica. No incluye certificación WCAG, pruebas con usuarios, lector de pantalla real ni implementación de correcciones.</p>
+        </section>
+
+        <section class="section" id="hallazgos" aria-labelledby="hallazgos-titulo">
+            <div class="section-heading">
+                <p class="section-number">03 / Evidencia</p>
+                <h2 id="hallazgos-titulo">Hallazgos priorizados</h2>
+                <p>Cada ficha conecta evidencia, impacto, recomendación y una condición observable de aceptación.</p>
+            </div>
+
+            <div class="findings-list">
+                <article class="finding priority-high" id="ux-01">
+                    <header class="finding-header">
+                        <div><span class="finding-id">UX-01</span><h3>Cambio de vigencia sin confirmación</h3></div>
+                        <span class="priority">ALTA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> vigencia · prevención de error · control y libertad</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p><code>catalog.php:140-147</code> envía directamente el toggle; <code>app.js:208-224</code> llama a la mutación sin confirmación. Semana 8 sí diseñó diálogo y Cancelar en <code>semana-08-wireframes.html:127-132</code>.</p></div>
+                        <div><h4>Impacto</h4><p>Una sola activación puede volver seleccionable o no seleccionable un medicamento sin revisar el estado destino.</p></div>
+                        <div><h4>Recomendación</h4><p>Confirmar con nombre, estado actual, estado resultante, efecto y acciones Cancelar/Activar o Desactivar.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>No mutar antes de confirmar; Cancelar y Escape no cambian datos; el éxito se anuncia y el foco retorna al disparador.</p></div>
+                    </div>
+                </article>
+
+                <article class="finding priority-high" id="a11y-01">
+                    <header class="finding-header">
+                        <div><span class="finding-id">A11Y-01</span><h3>Errores sin relación con campos ni foco</h3></div>
+                        <span class="priority">ALTA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> alta · presentación · concentración · unicidad</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p><code>MedicationController.php:63-65</code> crea una lista global; <code>catalog.php:53-60</code> la muestra fuera del formulario. Los campos de <code>catalog.php:74-92</code> no reciben error asociado y <code>app.js:182-205</code> no dirige el foco.</p></div>
+                        <div><h4>Impacto</h4><p>La persona debe deducir qué campo corregir y puede no recuperar un alta o un nombre duplicado de forma autónoma.</p></div>
+                        <div><h4>Recomendación</h4><p>Mapear errores a campos, usar <code>aria-invalid</code> y <code>aria-describedby</code>, conservar resumen y enfocar el primer error.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>Cada error se presenta y anuncia junto al campo; los datos válidos permanecen; un duplicado enfoca Nombre comercial.</p></div>
+                    </div>
+                </article>
+
+                <article class="finding priority-medium" id="ux-02">
+                    <header class="finding-header">
+                        <div><span class="finding-id">UX-02</span><h3>Obligatoriedad y ayuda insuficientes</h3></div>
+                        <span class="priority">MEDIA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> alta · presentación · concentración · estado inicial</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p><code>catalog.php:74-93</code> usa <code>required</code>, pero no presenta instrucción visible ni indicador. Los ejemplos de presentación y concentración solo son placeholders.</p></div>
+                        <div><h4>Impacto</h4><p>Las reglas se descubren después de intentar guardar y los ejemplos desaparecen al escribir.</p></div>
+                        <div><h4>Recomendación</h4><p>Indicar obligatoriedad antes del formulario y añadir ayuda persistente asociada, incluida la consecuencia de INACTIVO.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>La obligatoriedad es visible antes de enviar; las ayudas de Presentación, Concentración y Estado permanecen al escribir.</p></div>
+                    </div>
+                </article>
+
+                <article class="finding priority-medium" id="ux-03">
+                    <header class="finding-header">
+                        <div><span class="finding-id">UX-03</span><h3>Vacío y sin resultados son indistinguibles</h3></div>
+                        <span class="priority">MEDIA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> catálogo · búsqueda · alta inicial</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p><code>catalog.php:114-118</code> siempre muestra “Sin resultados” cuando no hay filas; <code>157-161</code> repite el mensaje. Semana 8 diferencia las causas en <code>semana-08-wireframes.html:147-160</code>.</p></div>
+                        <div><h4>Impacto</h4><p>No queda claro si el catálogo carece de registros o si debe corregirse/limpiarse la consulta.</p></div>
+                        <div><h4>Recomendación</h4><p>Condicionar título, explicación y acción según exista término de búsqueda.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>Sin registros se anuncia catálogo vacío; con <code>q=Nuberal</code> se anuncia cero coincidencias para ese término y se ofrece Limpiar.</p></div>
+                    </div>
+                </article>
+
+                <article class="finding priority-medium" id="a11y-02">
+                    <header class="finding-header">
+                        <div><span class="finding-id">A11Y-02</span><h3>Acciones de vigencia con nombres repetidos</h3></div>
+                        <span class="priority">MEDIA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> vigencia · lector de pantalla · control por voz</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p>Los botones de <code>catalog.php:144-146</code> solo se llaman “Activar” o “Desactivar”; no incorporan el nombre del medicamento.</p></div>
+                        <div><h4>Impacto</h4><p>Al navegar por la lista de controles, varias acciones son indistinguibles y aumenta el riesgo de actuar sobre otra fila.</p></div>
+                        <div><h4>Recomendación</h4><p>Mantener texto visual breve y exponer “Activar/Desactivar + medicamento” como nombre accesible.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>Cada botón tiene nombre único con acción y medicamento, también después de actualizar el catálogo.</p></div>
+                    </div>
+                </article>
+
+                <article class="finding priority-medium" id="ux-04">
+                    <header class="finding-header">
+                        <div><span class="finding-id">UX-04</span><h3>Fallo de búsqueda sin recuperación explícita</h3></div>
+                        <span class="priority">MEDIA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> búsqueda · estado del sistema · recuperación</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p><code>app.js:131-143</code> muestra “No se pudo completar la búsqueda.” sin aclarar que los resultados no se actualizaron ni ofrecer Reintentar.</p></div>
+                        <div><h4>Impacto</h4><p>El catálogo visible puede confundirse con la respuesta del término actual y la recuperación queda implícita.</p></div>
+                        <div><h4>Recomendación</h4><p>Conservar término/resultados, explicar el estado y añadir una acción Reintentar.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>Un fallo anunciado informa que no se actualizaron resultados; Reintentar completa la consulta sin perder el término.</p></div>
+                    </div>
+                </article>
+
+                <article class="finding priority-medium" id="a11y-03">
+                    <header class="finding-header">
+                        <div><span class="finding-id">A11Y-03</span><h3>Placeholder con contraste de 2.56:1</h3></div>
+                        <span class="priority">MEDIA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> búsqueda · ejemplos de presentación y concentración</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p><code>styles.css:195,199</code> combina <code>#94a3b8</code> con blanco. La relación calculada es <strong>2.56:1</strong>; el buscador tiene su etiqueta visualmente oculta en <code>catalog.php:105-108</code>.</p></div>
+                        <div><h4>Impacto</h4><p>La instrucción visible para buscar por nombre comercial o genérico y los ejemplos tienen legibilidad insuficiente.</p></div>
+                        <div><h4>Recomendación</h4><p>Usar texto con al menos 4.5:1 y trasladar la instrucción principal a una etiqueta visible persistente.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>La medición final es al menos 4.5:1 y el alcance de búsqueda permanece visible después de escribir.</p></div>
+                    </div>
+                </article>
+
+                <article class="finding priority-low" id="a11y-04">
+                    <header class="finding-header">
+                        <div><span class="finding-id">A11Y-04</span><h3>Diálogo estático sin gestión de foco demostrable</h3></div>
+                        <span class="priority">BAJA</span>
+                    </header>
+                    <p class="affected"><strong>Afecta:</strong> wireframe 04 · teclado · futura confirmación</p>
+                    <div class="finding-body">
+                        <div><h4>Evidencia</h4><p><code>semana-08-wireframes.html:127-133</code> tiene nombre y descripción, pero no <code>aria-modal</code>, script, foco inicial, ciclo, Escape ni retorno de foco.</p></div>
+                        <div><h4>Impacto</h4><p>Una implementación literal permitiría salir del diálogo con Tab o perder la posición al cerrarlo.</p></div>
+                        <div><h4>Recomendación</h4><p>Resolver el patrón modal accesible al implementar la confirmación de UX-01.</p></div>
+                        <div class="acceptance"><h4>Criterio verificable</h4><p>El foco entra y permanece en el diálogo; Escape/Cancelar cierran sin cambio y devuelven foco al disparador.</p></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section contrast-section" id="contraste" aria-labelledby="contraste-titulo">
+            <div class="section-heading">
+                <p class="section-number">04 / Medición</p>
+                <h2 id="contraste-titulo">Contraste calculado desde CSS real</h2>
+                <p>Relaciones obtenidas con la fórmula de luminancia relativa WCAG. No se inventaron valores ni se extrapola conformidad total.</p>
+            </div>
+            <div class="contrast-grid">
+                <article class="contrast-pass"><div class="swatch swatch-ink">Aa</div><h3>15.55:1</h3><p><code>#172033</code> / <code>#f8fafc</code></p><strong>CUMPLE</strong></article>
+                <article class="contrast-pass"><div class="swatch swatch-muted">Aa</div><h3>4.76:1</h3><p><code>#64748b</code> / <code>#ffffff</code></p><strong>CUMPLE</strong></article>
+                <article class="contrast-pass"><div class="swatch swatch-button">Aa</div><h3>6.70:1</h3><p><code>#ffffff</code> / <code>#1d4ed8</code></p><strong>CUMPLE</strong></article>
+                <article class="contrast-pass"><div class="swatch swatch-error">Aa</div><h3>6.05:1</h3><p><code>#b42318</code> / <code>#fef3f2</code></p><strong>CUMPLE</strong></article>
+                <article class="contrast-pass"><div class="swatch swatch-inactive">Aa</div><h3>5.10:1</h3><p><code>#9a5b13</code> / <code>#fff7ed</code></p><strong>CUMPLE</strong></article>
+                <article class="contrast-fail"><div class="swatch swatch-placeholder">Aa</div><h3>2.56:1</h3><p><code>#94a3b8</code> / <code>#ffffff</code></p><strong>NO CUMPLE</strong></article>
+            </div>
+        </section>
+
+        <section class="section" id="backlog" aria-labelledby="backlog-titulo">
+            <div class="section-heading">
+                <p class="section-number">05 / Acción</p>
+                <h2 id="backlog-titulo">Backlog priorizado</h2>
+            </div>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Backlog priorizado; desplácese horizontalmente si es necesario">
+                <table>
+                    <thead><tr><th>Orden</th><th>ID</th><th>Prioridad</th><th>Impacto</th><th>Corrección</th><th>Criterio verificable</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td><a href="#ux-01">UX-01</a></td><td><span class="table-priority high">ALTA</span></td><td>Vigencia accidental</td><td>Confirmación accesible</td><td>No mutar antes de confirmar; Cancelar/Escape conservan estado.</td></tr>
+                        <tr><td>2</td><td><a href="#a11y-01">A11Y-01</a></td><td><span class="table-priority high">ALTA</span></td><td>Recuperación de alta/unicidad</td><td>Error asociado y foco</td><td><code>aria-invalid</code>, descripción y foco al primer error.</td></tr>
+                        <tr><td>3</td><td><a href="#ux-02">UX-02</a></td><td><span class="table-priority medium">MEDIA</span></td><td>Presentación/concentración</td><td>Reglas y ayuda persistente</td><td>Obligatoriedad y ayudas visibles antes y durante la edición.</td></tr>
+                        <tr><td>4</td><td><a href="#ux-03">UX-03</a></td><td><span class="table-priority medium">MEDIA</span></td><td>Búsqueda y catálogo vacío</td><td>Estados diferenciados</td><td>Textos y acciones dependen de término y registros.</td></tr>
+                        <tr><td>5</td><td><a href="#a11y-02">A11Y-02</a></td><td><span class="table-priority medium">MEDIA</span></td><td>Vigencia equivocada</td><td>Acción + medicamento</td><td>Cada botón expone un nombre accesible único.</td></tr>
+                        <tr><td>6</td><td><a href="#ux-04">UX-04</a></td><td><span class="table-priority medium">MEDIA</span></td><td>Resultados desactualizados</td><td>Mensaje y Reintentar</td><td>Conserva término/resultados y recupera la consulta.</td></tr>
+                        <tr><td>7</td><td><a href="#a11y-03">A11Y-03</a></td><td><span class="table-priority medium">MEDIA</span></td><td>Legibilidad de instrucciones</td><td>Color >= 4.5:1</td><td>Medición final mínima de 4.5:1.</td></tr>
+                        <tr><td>8</td><td><a href="#a11y-04">A11Y-04</a></td><td><span class="table-priority low">BAJA</span></td><td>Teclado en futuro modal</td><td>Patrón modal completo</td><td>Foco contenido, Escape y retorno al disparador.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section section-dark" id="cumplimientos" aria-labelledby="cumplimientos-titulo">
+            <div class="section-heading">
+                <p class="section-number">06 / Balance</p>
+                <h2 id="cumplimientos-titulo">Elementos que ya cumplen</h2>
+            </div>
+            <ul class="compliance-list">
+                <li><strong>Teclado:</strong> controles HTML nativos y orden DOM lógico en la interfaz funcional.</li>
+                <li><strong>Etiquetas:</strong> todos los campos de alta y el buscador tienen relación programática.</li>
+                <li><strong>Mensajes:</strong> alertas, estados y resultados usan regiones vivas y roles pertinentes.</li>
+                <li><strong>Vigencia:</strong> ACTIVO/INACTIVO y su efecto se expresan con texto, no solo color.</li>
+                <li><strong>Recuperación:</strong> se conservan valores correctos y el toggle asíncrono devuelve foco a su acción.</li>
+                <li><strong>Unicidad:</strong> nombre normalizado, comprobación previa y manejo de restricción única en persistencia.</li>
+                <li><strong>Contraste:</strong> texto principal, secundario, botón, error y estado inactivo superan 4.5:1 en los pares calculados.</li>
+                <li><strong>Movimiento:</strong> la hoja funcional respeta <code>prefers-reduced-motion</code>.</li>
+            </ul>
+            <div class="closing-note">
+                <strong>Resultado de Semana 9</strong>
+                <p>8 hallazgos documentados, backlog ordenado y criterios verificables. Las correcciones permanecen propuestas; no se reconstruyó la interfaz ni se adelantaron semanas posteriores.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Semana 9 · Catálogo de Medicamentos · María Yamilet Lindo Pablo · Evidencia académica</p>
+        <p><a href="SEMANA-09-USABILIDAD-ACCESIBILIDAD.md">Informe textual</a> · <a href="semana-09-checklist.md">Checklist completo</a></p>
+    </footer>
+</body>
+</html>
